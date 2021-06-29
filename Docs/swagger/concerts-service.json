@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Concerts Service",
-    "description": "Concerts Service returns the concerts matching the criteria given by the user.",
+    "title": "Welcome Service",
+    "description": "Welcole Service returns a welcome message.",
     "version": "1.0.0"
   },
   "servers": [
@@ -80,121 +80,6 @@
           }
         }
       }
-    },
-    "/concerts": {
-      "get": {
-        "tags": [
-          "CONCERTS"
-        ],
-        "summary": "GET_Concerts",
-        "description": "Cette API nous permet de récuprer la liste des concerts répondant au critères de filtre.",
-        "operationId": "get-concerts",
-        "parameters": [
-          {
-            "name": "bandIds",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "radius",
-            "in": "query",
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "longitude",
-            "in": "query",
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "latitude",
-            "in": "query",
-            "schema": {
-              "type": "number"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Renvoie la ressource Concerts",
-            "headers": {
-              "WeMaintain-Api-Version": {
-                "description": "Version de l'API qui a traité la requête",
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ConcertsGet200ApplicationJsonResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "La requête a échoué probablement en raison de paramètres incorrects.",
-            "headers": {
-              "WeMaintain-Api-Version": {
-                "description": "Version de l'API qui a traité la requête",
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Resource_Error_Message"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "La ressource demandée n'existe pas sur le serveur",
-            "headers": {
-              "WeMaintain-Api-Version": {
-                "description": "Version de l'API qui a traité la requête",
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Resource_Error_Message"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Le serveur a rencontré une erreur dans le traitement de la requête",
-            "headers": {
-              "WeMaintain-Api-Version": {
-                "description": "Version de l'API qui a traité la requête",
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Resource_Error_Message"
-                }
-              }
-            }
-          }
-        }
-      }
-    }
   },
   "components": {
     "schemas": {
