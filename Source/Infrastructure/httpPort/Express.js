@@ -38,7 +38,7 @@ class Express {
                     + 'Content-Length, '
                     + 'Content-MD5, '
                     + 'Content-Type, '
-                    + 'Date, WeMaintain-Api-Version, '
+                    + 'Date, Api-Version, '
                     + 'X-Response-Time, '
                     + 'X-PINGOTHER, X-CSRF-Token,Authorization',
                 );
@@ -68,9 +68,9 @@ class Express {
         app.use(compression());
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-        /** Add WeMaintain-Api-Version to Header Response. */
+        /** Add Api-Version to Header Response. */
         app.use((request, response, next) => {
-            response.setHeader('WeMaintain-Api-Version', global.api_version ? global.api_version : 'NoN');
+            response.setHeader('Api-Version', global.api_version ? global.api_version : 'NoN');
             next();
         });
         this.initHelmetHeaders(app);

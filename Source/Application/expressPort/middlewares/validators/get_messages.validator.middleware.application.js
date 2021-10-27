@@ -1,6 +1,6 @@
-const { concerts } = require('./../../../dto');
+const { messages } = require('./../../../dto');
 /**
- * @typedef {ConcertsInput} ConcertsInput
+ * @typedef {MessagesInput} MessagesInput
  */
 
 /**
@@ -10,14 +10,14 @@ const { concerts } = require('./../../../dto');
  * @returns {{valid: {boolean}, error: {Object}}}
  */
 function validate_input_filter(query) {
-    const inputValidator = concerts.concertsInputFilter;
+    const inputValidator = messages.MessageInputFilter;
     const { error } = inputValidator.validate(query);
     const valid = error != null ? false : Object.keys(query).length > 0;
     return { valid, error };
 }
 
 /**
- * Middleware Validator GET_CONCERTS_VALIDATOR.
+ * Middleware Validator GET_MESSAGES_VALIDATOR.
  *
  * @function
  * @param {object} request - Express request object.
@@ -28,7 +28,7 @@ module.exports = (request, response, next) => {
     try {
         /** Split bandIds query to an array of id. */
         // eslint-disable-next-line no-unused-expressions
-        request.query.bandIds ? request.query.bandIds = request.query.bandIds.trim().split(',') : null;
+        request.query.message_id ? request.query.message_id = request.query.message_id.trim().split(',') : null;
         const result = validate_input_filter(request.query);
         if (!result.valid) {
             request._type_content = 'bad_request_with_errors';

@@ -11,21 +11,30 @@
     }
   ],
   "paths": {
-    "/welcome": {
+    "/messages": {
       "get": {
         "tags": [
           "Utils"
         ],
-        "summary": "GET_Welcome",
+        "summary": "GET_Messages_Welcome",
         "description": "Ping endpoint",
-        "operationId": "get-welcome",
+        "operationId": "get-messages-welcome",
         "parameters": [
+          {
+            "name": "message_id",
+            "in": "query",
+            "required": true,
+            "description": "la liste des messages id séparées par des virgules",
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "responses": {
           "200": {
-            "description": "Status 200",
+            "description": "Renvoie la ressource messages - Status 200",
             "headers": {
-              "WeMaintain-Api-Version": {
+              "Api-Version": {
                 "description": "Version de l'API qui a traité la requête",
                 "schema": {
                   "type": "string"
@@ -33,13 +42,17 @@
               }
             },
             "content": {
-              "application/json": {}
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessagesWelcomeGet200ApplicationJsonResponse"
+                }
+              }
             }
           },
           "400": {
             "description": "La requête a échoué probablement en raison de paramètres incorrects.",
             "headers": {
-              "WeMaintain-Api-Version": {
+              "Api-Version": {
                 "description": "Version de l'API qui a traité la requête",
                 "schema": {
                   "type": "string"
@@ -47,13 +60,17 @@
               }
             },
             "content": {
-              "application/json": {}
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Resource_Error_Message"
+                }
+              }
             }
           },
           "404": {
             "description": "La ressource demandée n'existe pas sur le serveur",
             "headers": {
-              "WeMaintain-Api-Version": {
+              "Api-Version": {
                 "description": "Version de l'API qui a traité la requête",
                 "schema": {
                   "type": "string"
@@ -61,13 +78,17 @@
               }
             },
             "content": {
-              "application/json": {}
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Resource_Error_Message"
+                }
+              }
             }
           },
           "500": {
             "description": "Le serveur a rencontré une erreur dans le traitement de la requête",
             "headers": {
-              "WeMaintain-Api-Version": {
+              "Api-Version": {
                 "description": "Version de l'API qui a traité la requête",
                 "schema": {
                   "type": "string"
@@ -75,7 +96,11 @@
               }
             },
             "content": {
-              "application/json": {}
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Resource_Error_Message"
+                }
+              }
             }
           }
         }
@@ -142,7 +167,7 @@
         },
         "description": "Cette structure est renvoyée au client en cas d'erreur de la requête"
       },
-      "ConcertsGet200ApplicationJsonResponse": {
+      "MessagesWelcomeGet200ApplicationJsonResponse": {
         "required": [
           "_etag",
           "_links",
@@ -154,31 +179,19 @@
           "_resource_type": {
             "type": "string",
             "enum": [
-              "Concerts_Collection_Resource"
+              "Messages_Welcome_Collection_Resource"
             ]
           },
           "_resource": {
             "type": "object",
             "properties": {
-              "date": {
+              "message": {
+                "$ref": "#/components/schemas/Messages",
+                "description": ""
+              },
+              "UserAgent": {
                 "type": "string",
-                "description": ""
-              },
-              "location": {
-                "type": "string",
-                "description": ""
-              },
-              "band": {
-                "type": "string",
-                "description": ""
-              },
-              "longitude": {
-                "type": "number",
-                "description": ""
-              },
-              "latitude": {
-                "type": "number",
-                "description": ""
+                "description": "Agent HTTP utilisé"
               }
             }
           },
@@ -191,38 +204,12 @@
           }
         }
       },
-      "Bands": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "Le nom du groupe."
-          }
-        }
-      },
-      "Venues": {
-        "type": "object",
-        "required": [
-          "name",
-          "position"
-        ],
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "Le nom de la salle."
-          },
-          "location": {
-            "type": "object",
-            "properties": {
-              "latitude": {
-                "type": "string"
-              },
-              "longitude": {
-                "type": "string"
-              }
-            }
-          }
-        }
+      "Messages": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "La liste des messages welcome."
       }
     }
   }

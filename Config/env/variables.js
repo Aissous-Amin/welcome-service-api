@@ -16,7 +16,7 @@ const env = {
     /** @type {string} */
     APP_SERVER_PORT: process.env.APP_SERVER_PORT,
     /** @type {string} */
-    DATABASE_SERVER: process.env.DATABASE_SERVER || 'mongodb://localhost:27017/concerts',
+    DATABASE_SERVER: process.env.DATABASE_SERVER || 'mongodb://localhost:27017/messages',
 };
 
 module.exports = env;

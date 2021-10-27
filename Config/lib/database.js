@@ -68,12 +68,8 @@ class MONGOOSE {
     static async import_data(data) {
         try {
             const promises = [];
-            const concerts = JSON.parse(fs.readFileSync(`${__dirname}/data/concerts.json`, 'utf-8'));
-            const bands = JSON.parse(fs.readFileSync(`${__dirname}/data/bands.json`, 'utf-8'));
-            const venues = JSON.parse(fs.readFileSync(`${__dirname}/data/venues.json`, 'utf-8'));
-            promises.push(data.Concerts.insertMany(concerts));
-            promises.push(data.Bands.insertMany(bands));
-            promises.push(data.Venues.insertMany(venues));
+            const messages = JSON.parse(fs.readFileSync(`${__dirname}/data/messages.json`, 'utf-8'));
+            promises.push(data.Messages.insertMany(messages));
             console.log('Importing data to mongodb database...');
             await Promise.all(promises);
             console.log('Import data to mongodb database : Done!');

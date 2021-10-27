@@ -1,5 +1,5 @@
-const read_concerts_collection = require('./read_concerts_collection.queries.usescases.application');
+const read_welcome_messages_collection = require('./read_welcome_messages_collection.queries.usescases.application');
 
 module.exports = {
-    read_concerts_collection,
+    read_welcome_messages_collection,
 };
