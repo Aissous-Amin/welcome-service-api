@@ -17,7 +17,7 @@ module.exports = (app) => {
     /**
      * End-point service concerts.
      */
-    const categories = ['concerts', 'util'];
+    const categories = ['util'];
     categories.forEach((categorie) => {
         const routes = require(`./${categorie}`);
         if (routes) {

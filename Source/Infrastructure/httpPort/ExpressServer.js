@@ -1,13 +1,11 @@
 const Express = require('./Express');
 const http = require('http');
-// const MONGOOSE = require('../../../Config/lib/database');
+const MONGOOSE = require('../../../Config/lib/database');
 // const APM = require('../../../Config/lib/apm');
 // const APPINSIGHTS = require('../../../Config/lib/azureApplicationInsights');
 
-// const persistence = require(__moduleAliases.Persistance);
-// const { Concerts } = persistence.mongoose.schemas.concerts;
-// const { Bands } = persistence.mongoose.schemas.bands;
-// const { Venues } = persistence.mongoose.schemas.venues;
+const persistence = require(__moduleAliases.Persistance);
+const {Messages} = persistence.mongoose.schemas.messages;
 
 /** @memberof Infrastructure/ports/http */
 
@@ -25,9 +23,9 @@ class ExpressServer {
      */
     static async init(middlewares) {
         /** init connection with Mongoose data base. */
-        // await MONGOOSE.init();
+        await MONGOOSE.init();
         /** Implement data into our Mongoose data base. */
-        // await MONGOOSE.import_data({ Bands, Venues, Concerts });
+        //await MONGOOSE.import_data({Messages});
         /** @type {object} */
         const app = Express.init();
         /** init connection with APM agent. */

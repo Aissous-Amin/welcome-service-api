@@ -28,14 +28,14 @@ Object.assign(global, __moduleAliases);
  * @type {{prefix: (string|string), port: (string|string), host: (string|string)}}
  */
 module.exports = {
-    prefix: variables.APP_PREFIX || '/apiconcertsservice',
+    prefix: variables.APP_PREFIX || '/apiwelcomeservice',
     port: variables.APP_SERVER_PORT || process.env.PORT || '3001',
     host: variables.APP_SERVER_HOST || process.env.HOST || 'localhost',
-    startMessage: `˜”*°•.˜”*°• Weclome to API Concerts Service*”˜.•°*”˜`,
+    startMessage: `˜”*°•.˜”*°• Weclome to API Service*”˜.•°*”˜`,
     app: {
 
-        title: 'CONCERTS-SERVICE ',
-        description: 'Concerts service permet d’harmoniser et de simplifier la gestion et la recherche des concerts, il offre les API nécessaires à la recherche de toutes les informations sur les évenements de type concerts.',
+        title: 'WELCOME-API-SERVICE ',
+        description: 'Welcome API service est un POC d initiation aux principles bonne pratiques d implimentation d une API RESTfull',
         keywords: 'backend, test, concerts, express, node.js',
     },
 };

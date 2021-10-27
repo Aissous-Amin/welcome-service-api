@@ -1,5 +1,5 @@
-const concerts = require('./concerts');
+const messages = require('./messages');
 
 module.exports = {
-    concerts,
+    messages,
 };

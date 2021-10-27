@@ -1,5 +1,7 @@
-const get_concerts = require('./get_concerts.validator.middleware.application');
+const put_messages = require('./put_messages.validator.middleware.application');
+const get_messages = require('./get_messages.validator.middleware.application');
 
 module.exports = {
-    get_concerts,
+    put_messages,
+    get_messages,
 };

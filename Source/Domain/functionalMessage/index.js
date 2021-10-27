@@ -1,7 +1,7 @@
 const common = require('./common');
-const concerts = require('./concerts');
+const messages = require('./messages');
 
 module.exports = {
     common,
-    concerts,
+    messages,
 };

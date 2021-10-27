@@ -8,18 +8,11 @@ const CommonErrorMessage = require('../common/CommonErrorMessage');
  * @property {number} longitude - Longitude.
  * @property {number} radius - Radius in kilometers.
  */
-const ConcertsInputFilter = Joi.object({
-    bandIds: Joi.array().items(Joi.number())
-        .error(CommonErrorMessage.validate_global),
-    latitude: Joi.number()
+const MessageInputFilter = Joi.object({
+    message_id: Joi.array().required()
         .error(CommonErrorMessage.validate),
-    longitude: Joi.number()
+    message: Joi.string()
         .error(CommonErrorMessage.validate),
-    radius: Joi.number().integer()
-        .error(CommonErrorMessage.validate),
-}).min(1)
-    .and('latitude', 'longitude')
-    .and('longitude', 'radius')
-    .error(CommonErrorMessage.validate_global);
+}).error(CommonErrorMessage.validate_global);
 
-module.exports = ConcertsInputFilter;
+module.exports = MessageInputFilter;
