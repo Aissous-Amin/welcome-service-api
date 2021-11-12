@@ -19,6 +19,18 @@ function parse_url_page(url, page) {
     return value;
 }
 
+/**
+ * This function is a Intermediate Function Inheritance - une fonction intermédiaire qui permet de mettre en place l'héritage et de changer la chaine prototypique
+ *
+ * @param {Object} Child - Object Child
+ * @param {Object} Parent - Object Parent
+ */
+function extend(Child, Parent) {
+    Child.prototype = Object.create(Parent.prototype);
+    Child.prototype.constructor = Child;
+}
+
 module.exports = {
     parse_url_page,
+    extend,
 };
