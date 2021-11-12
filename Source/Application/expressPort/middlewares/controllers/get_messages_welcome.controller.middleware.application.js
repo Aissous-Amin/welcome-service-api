@@ -12,7 +12,7 @@ const common_use_case = require('../../uses-cases');
  * @param {object} response - Express response object.
  * @param {Function} next - Callback next express.
  */
-async function get_welcome(request, response, next) {
+async function get_messages_welcome(request, response, next) {
     try {
         if (request._type_content === undefined) {
             const result = await common_use_case.queries.read_welcome_messages_collection(request.query);
@@ -37,4 +37,4 @@ async function get_welcome(request, response, next) {
     }
 }
 
-module.exports = get_welcome;
+module.exports = get_messages_welcome;
