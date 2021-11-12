@@ -1,6 +1,6 @@
 {
-  "get_welcome": {
-    "url": "/welcome",
+  "get_welcome_messages": {
+    "url": "/messages",
     "query": {}
   }
 }

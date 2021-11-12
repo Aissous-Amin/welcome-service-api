@@ -45,6 +45,7 @@ module.exports = (app) => {
     app.use((error, request, response) => {
         console.error(error);
         request._type_content = 'internal_server_with_errors';
+        request._details = { message: error.message };
         ResponseController.ExpressResponseController(request, response);
     });
 };
