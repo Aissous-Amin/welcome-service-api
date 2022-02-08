@@ -1,6 +1,6 @@
 const APM_SERVICE = require('elastic-apm-node');
 
-class APM {
+class ElasticApmConfig {
     static init(paramaters = {
         // Override the name e servicfrom package.json
         // Allowed characters: a-z, A-Z, 0-9, -, _, and space
@@ -34,4 +34,4 @@ class APM {
     }
 }
 
-module.exports = APM;
+module.exports = ElasticApmConfig;

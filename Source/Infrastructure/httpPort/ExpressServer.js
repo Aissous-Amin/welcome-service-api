@@ -1,7 +1,5 @@
 const Express = require('./Express');
 const http = require('http');
-// const APM = require('../../../Config/lib/apm');
-// const APPINSIGHTS = require('../../../Config/lib/azureApplicationInsights');
 const persistence = require(__moduleAliases.Persistance);
 
 // const { Messages } = persistence.mongoose.schemas.messages;
@@ -28,11 +26,11 @@ class ExpressServer {
         /** @type {object} */
         const app = Express.init();
         /** init connection with APM agent. */
-        // APM.init();
+        // persistence.elasticApm.elasticApmConfig.init();
         /** Create log directory with logger stream. */
         // logger.initDir();
         /** init connection with azure application insights. */
-        // APPINSIGHTS.init(__config.AZURE_APPLICATION_INSIGHTS);
+        // persistence.appInsight.applicationInsightConfig.init(__config.AZURE_APPLICATION_INSIGHTS);
         /** TODO : Create log directory with logger stream or apm agent here. */
         /** Init service end-points. */
         middlewares(app);
