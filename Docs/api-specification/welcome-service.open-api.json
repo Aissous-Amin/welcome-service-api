@@ -1,0 +1,490 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Welcome Service",
+    "description": "Welcome Service returns a welcome message.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Aissous Amin",
+      "email": "amin.aissous@totalenergies.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3001/api",
+      "description": "Local Server Backend"
+    }
+  ],
+  "paths": {
+    "/messages": {
+      "get": {
+        "summary": "GET_Messages_Welcome",
+        "description": "Ping endpoint - Get a welcome message",
+        "operationId": "get-messages-welcome",
+        "parameters": [
+          {
+            "name": "message_id",
+            "in": "query",
+            "required": true,
+            "description": "la liste des messages id séparées par des virgules",
+            "schema": {
+              "type": "string",
+              "default": "1",
+              "enum": [
+                "1",
+                "2",
+                "3",
+                "4",
+                "5"
+              ],
+              "example": "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Renvoie la ressource messages - Status 200",
+            "headers": {
+              "Api-Version": {
+                "description": "Version de l'API qui a traité la requête",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessagesWelcomeGet200ApplicationJsonResponse"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "_resource_type": "Messages_Welcome_Collection_Resource",
+                      "_resource": {
+                        "message": [
+                          "Hello World!"
+                        ],
+                        "UserAgent": "PostMa,RunTime/7.29.0"
+                      },
+                      "_links": {},
+                      "_etag": "February 7th 2022, 8:31:33 pm"
+                    }
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {}
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "La requête a échoué probablement en raison de paramètres incorrects.",
+            "headers": {
+              "Api-Version": {
+                "description": "Version de l'API qui a traité la requête",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Resource_Error_Message"
+                },
+                "examples": {}
+              }
+            }
+          },
+          "404": {
+            "description": "La ressource demandée n'existe pas sur le serveur",
+            "headers": {
+              "Api-Version": {
+                "description": "Version de l'API qui a traité la requête",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Resource_Error_Message"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Le serveur a rencontré une erreur dans le traitement de la requête",
+            "headers": {
+              "Api-Version": {
+                "description": "Version de l'API qui a traité la requête",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Resource_Error_Message"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Messages"
+        ]
+      },
+      "post": {
+        "summary": "POST_Messages_Welcome",
+        "operationId": "post-messages-welcome",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "headers": {
+              "API-Version": {
+                "schema": {
+                  "type": "number"
+                },
+                "description": "Numéro de version API Service"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "x-examples": {
+                    "example-1": {
+                      "_resource_type": "Welcome_Messages_Collection_Resource",
+                      "_resource": {
+                        "message": "Welcome to API service - version 1",
+                        "message_id": 123
+                      },
+                      "_links": {
+                        "href": "https://mylocaldomain.net/api/messages",
+                        "self": "https://mylocaldomain.net/api/messages/{message_id}"
+                      },
+                      "_etag": "December 2nd 2021, 12:05:55 am"
+                    }
+                  },
+                  "properties": {
+                    "_resource_type": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "_resource": {
+                      "type": "object",
+                      "required": [
+                        "message",
+                        "message_id"
+                      ],
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "message_id": {
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "_links": {
+                      "type": "object",
+                      "required": [
+                        "href",
+                        "self"
+                      ],
+                      "properties": {
+                        "href": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "self": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      }
+                    },
+                    "_etag": {
+                      "type": "string",
+                      "minLength": 1,
+                      "format": "Date",
+                      "example": "December 2nd 2021, 12:14:41 am",
+                      "readOnly": true
+                    }
+                  },
+                  "required": [
+                    "_resource_type",
+                    "_resource",
+                    "_links",
+                    "_etag"
+                  ]
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "_resource_type": "string",
+                      "_resource": {
+                        "message": "string",
+                        "message_id": 0
+                      },
+                      "_links": {
+                        "href": "string",
+                        "self": "string"
+                      },
+                      "_etag": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Resource_Error_Message"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Resource_Error_Message"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Resource_Error_Message"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Resource_Error_Message"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Resource_Error_Message"
+                }
+              }
+            }
+          }
+        },
+        "description": "Post a new weclome message",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessagesPostBodyInput"
+              },
+              "examples": {
+                "example-1": {
+                  "value": {
+                    "message": "Hello this is a new welcome message"
+                  }
+                }
+              }
+            }
+          },
+          "description": "POST_Welcome_Message Body"
+        },
+        "tags": [
+          "Messages"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Error_Message": {
+        "type": "object",
+        "required": [
+          "_api_status_code",
+          "_api_status_message"
+        ],
+        "properties": {
+          "_api_status_code": {
+            "type": "integer",
+            "description": "vaut 0 ou <code_erreur> : en cas d'échec\n\n4000 : erreur liée aux paramètres de la requête\n\n5000 : erreur dans le traitement serveur"
+          },
+          "_api_status_message": {
+            "type": "string",
+            "description": "message associé à l'erreur"
+          },
+          "_api_status_id": {
+            "type": "string",
+            "description": "Identifiant d'une requête qui permet, en cas d'erreur non prévue ou connue, de rechercher dans les logs."
+          }
+        },
+        "description": "Cette structure est renvoyée au client en cas d'erreur de la requête"
+      },
+      "Resource_Error_Message": {
+        "type": "object",
+        "required": [
+          "_etag",
+          "_links",
+          "_resource",
+          "_resource_type"
+        ],
+        "properties": {
+          "_resource_type": {
+            "type": "string",
+            "enum": [
+              "Resource_Error"
+            ]
+          },
+          "_resource": {
+            "$ref": "#/components/schemas/Error_Message"
+          },
+          "_links": {
+            "required": [
+              "url"
+            ],
+            "type": "object",
+            "properties": {
+              "self": {
+                "type": "string"
+              }
+            }
+          },
+          "_etag": {
+            "type": "string",
+            "description": "Date de dernière lecture des données de la ressource"
+          }
+        },
+        "description": "Cette structure est renvoyée au client en cas d'erreur de la requête"
+      },
+      "MessagesWelcomeGet200ApplicationJsonResponse": {
+        "type": "object",
+        "x-examples": {
+          "example-1": {
+            "_resource_type": "Messages_Welcome_Collection_Resource",
+            "_resource": {
+              "message": [
+                "string"
+              ],
+              "UserAgent": "string"
+            },
+            "_links": {},
+            "_etag": "string"
+          }
+        },
+        "properties": {
+          "_resource_type": {
+            "type": "string",
+            "enum": [
+              "Messages_Welcome_Collection_Resource"
+            ]
+          },
+          "_resource": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "$ref": "#/components/schemas/Messages"
+              },
+              "UserAgent": {
+                "type": "string",
+                "description": "Agent HTTP utilisé"
+              }
+            }
+          },
+          "_links": {
+            "type": "object"
+          },
+          "_etag": {
+            "type": "string",
+            "description": "Date de dernière écriture des données de la ressource"
+          }
+        },
+        "required": [
+          "_resource_type",
+          "_resource",
+          "_links",
+          "_etag"
+        ]
+      },
+      "Messages": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "La liste des messages welcome.",
+        "x-examples": {
+          "example-1": [
+            "string"
+          ]
+        }
+      },
+      "MessagesPostBodyInput": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "message"
+        ],
+        "x-examples": {
+          "example-1": {
+            "message": "this is my new welcome message"
+          }
+        },
+        "title": "MessagesPostBodyInput"
+      }
+    },
+    "securitySchemes": {
+      "Ocp-Apim-Subscription-Key": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "API Key",
+        "description": "By publishing APIs through API Management, you can easily secure API access using subscription keys. Consume the published APIs by including a valid subscription key in the HTTP Header requests when calling to those APIs"
+      }
+    }
+  },
+  "security": [
+    {
+      "Ocp-Apim-Subscription-Key": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Messages",
+      "description": "All endpoints taged with this TAG reference the message resource collection"
+    }
+  ]
+}
