@@ -1,6 +1,5 @@
 const fs = require('fs');
 const rfs = require('rotating-file-stream');
-const env = require('../../../Config/env/variables');
 
 /**
  * Module Logger pour gérer les fichiers de logs et l'envoi vers APM Elastic.

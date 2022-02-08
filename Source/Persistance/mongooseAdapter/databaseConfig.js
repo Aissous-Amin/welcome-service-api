@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const env = require('../env/variables');
+const env = require('../../../Config/env/variables');
 const fs = require('fs');
 
 
@@ -14,6 +14,21 @@ let pool = null;
  * */
 
 class MONGOOSE {
+    /**
+     * Constructor.
+     * Initiation de la connexion with database.
+     *
+     * @param {string} server - database server.
+     * @param {string} user - database credential.
+     * @param {string} password - database credential.
+     * @example
+     * const database = new MONGOOSE('server', 'user', 'password');
+     */
+    constructor(server, user, password) {
+        this.server = server;
+        this.user = user;
+        this.password = password;
+    }
     /**
      * Init Mongoose Function.
      *

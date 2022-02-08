@@ -1,11 +1,10 @@
 const Express = require('./Express');
 const http = require('http');
-const MONGOOSE = require('../../../Config/lib/database');
 // const APM = require('../../../Config/lib/apm');
 // const APPINSIGHTS = require('../../../Config/lib/azureApplicationInsights');
-
 const persistence = require(__moduleAliases.Persistance);
-const {Messages} = persistence.mongoose.schemas.messages;
+
+// const { Messages } = persistence.mongoose.schemas.messages;
 
 /** @memberof Infrastructure/ports/http */
 
@@ -23,9 +22,9 @@ class ExpressServer {
      */
     static async init(middlewares) {
         /** init connection with Mongoose data base. */
-        await MONGOOSE.init();
+        await persistence.mongoose.database.init();
         /** Implement data into our Mongoose data base. */
-        //await MONGOOSE.import_data({Messages});
+        //await persistence.mongoose.database.import_data({Messages});
         /** @type {object} */
         const app = Express.init();
         /** init connection with APM agent. */
