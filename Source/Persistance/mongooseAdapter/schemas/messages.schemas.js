@@ -13,7 +13,7 @@ const messageSchema = new Schema({
 
 messageSchema.virtual('messages', {
     ref: 'Message', // The model to use
-    localField: '_id', // Find concert where `localField`
+    localField: '_id', // Find message where `localField`
     foreignField: 'message', // is equal to `foreignField`
 });
 

@@ -28,7 +28,7 @@ function message_error(options) {
     const message_error_object = {};
     message_error_object._api_status_code = options.api_status_code || 4000;
     message_error_object._api_status_message = options.api_status_message || 'Default Message Error';
-    message_error_object._api_status_id = options.request_id || '00000-00000-00000-00000-00000'; // TODO apply the request_id logic
+    message_error_object._api_status_id = options.request_id || '00000-00000-00000-00000-00000'; // TODO apply the request_id logic, you can use the same correlation id with app insight to propagate the context information across all your services.
     message_error_object._details = options.details || [];
     console.error(`${message_error_object._api_status_message}`);
     return message_error_object;

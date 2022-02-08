@@ -28,7 +28,7 @@ class Express {
             includeSubDomains: true,
             force: true,
         }));
-        if (['developpement,recette'].includes(process.env.NODE_ENV)) {
+        if (['developpement'].includes(process.env.NODE_ENV)) {
             app.use((req, res, next) => {
                 res.setHeader('Access-Control-Allow-Origin', '*');
                 res.setHeader(
@@ -68,7 +68,7 @@ class Express {
         app.use(compression());
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-        /** Add Api-Version to Header Response. */
+        /** Add Api-Version to All Header Response. */
         app.use((request, response, next) => {
             response.setHeader('Api-Version', global.api_version ? global.api_version : 'NoN');
             next();
