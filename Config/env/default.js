@@ -5,7 +5,7 @@ global.__base = process.cwd();
 global.__baseSrouce = `${__base}/Source`;
 
 /**
- *Le __moduleAliases can be used to access different project directories.
+ * The __moduleAliases can be used to access different project directories.
  *
  * @type {{root: string, Persistance: *, Application: *, Infrastructure: *, Domain: *, Presentation: *, Utils: *, Config: *}}
  * @private
