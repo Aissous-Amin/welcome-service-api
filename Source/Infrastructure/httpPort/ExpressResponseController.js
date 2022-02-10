@@ -1,5 +1,6 @@
 const httpStatus = require('http-status');
 const moment = require('moment');
+const { functionality } = require('../../Utils')
 
 /**
  * Create_structure function : initialization of the response object structure.
@@ -56,7 +57,7 @@ function creat_hateoas_structure(request, collection = false) {
     };
     links_tab.push(self);
     if(collection) {
-        hateoas_object.web_pages = paginate(request, self.href);
+        hateoas_object.web_pages = functionality.parse_url_page(self.href, request.query.offset, request.query.limit, request.query.count);
     }
     hateoas_object.web_links = links_tab;
     // you can add some hateoas logic here
@@ -88,7 +89,7 @@ module.exports.ExpressResponseController = (request, response) => {
         switch (request._type_content) {
             case 'object': {
                 const resource = request._resource !== undefined ? request._resource : {};
-                const structure = create_structure(request._resource_type, resource, creat_hateoas_structure(request, true));
+                const structure = create_structure(request._resource_type, resource, creat_hateoas_structure(request, false));
                 structure._request_id = request._request_id;
                 response.status(httpStatus.OK).json(structure);
                 break;

@@ -12,8 +12,7 @@ const CommonErrorMessage = require('../common/CommonErrorMessage');
  * @property {string} message - Message content.
  */
 const GetMessageCollectionFilter = Joi.object({
-    offset: Joi.string()
-        .error(CommonErrorMessage.validate),
+    offset: Joi.number().integer().min(1),
     limit: Joi.number().integer().max(10),
     sort: Joi.string().valid('_id'),
     order: Joi.string().valid('1', '-1'),

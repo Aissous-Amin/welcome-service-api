@@ -5,7 +5,7 @@ const MESSAGE_TYPE = require('./typeMessage');
 
 /**
  *
- * @type {object} List of functional messages linked to the Concerts resource.
+ * @type {object} List of functional messages linked to the message resource.
  */
 module.exports = {
     OBJECT_UNKNOWN: {
@@ -14,7 +14,7 @@ module.exports = {
         TYPE: MESSAGE_TYPE.VALIDATION,
     },
     UNDEFINED: {
-        MESSAGE: 'At least one query parameter is mandatory : bandIds OR latitude/longitude/radius (But can provide all the fields too)',
+        MESSAGE: 'At least one query parameter is mandatory',
         ID: 'RV-0006',
         TYPE: MESSAGE_TYPE.VALIDATION,
     },

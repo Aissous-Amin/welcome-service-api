@@ -18,6 +18,7 @@ function validate_message_input_filter(object, joiSchema) {
 
 function query_parser(request) {
     parseInt(request.query.limit);
+    parseInt(request.query.offset);
     return request;
 }
 
@@ -34,7 +35,7 @@ function get_messages_collection_validator (request, response, next) {
         const inputValidator = messages.GetMessageCollectionFilter;
         query_parser(request);
         const result = validate_message_input_filter(request.query, inputValidator);
-        if (!result.valid) {
+        if (result.error) {
             request._type_content = 'bad_request_with_errors';
             request._details = result.error ? result.error.details.map(elm => elm.message) : [];
         }
@@ -58,7 +59,7 @@ function get_messages_by_id_validator (request, response, next) {
     try {
         const inputValidator = messages.GetMessageByIdFilter;
         const result = validate_message_input_filter(request.params, inputValidator);
-        if (!result.valid) {
+        if (result.error) {
             request._type_content = 'bad_request_with_errors';
             request._details = result.error ? result.error.details.map(elm => elm.message) : [];
         }
