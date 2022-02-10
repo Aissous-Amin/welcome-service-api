@@ -35,6 +35,46 @@ function message_error(options) {
 }
 
 /**
+ * creat_hateoas_structure function.
+ * TODO : you have to configure HATEOAS based on your needs. You find below some examples and explanation
+ * This function implement the RFC 5988 for building links that define the relationships between our resources.
+ * Each resource in RFC 5988 contains the following properties: { href: Target URI, rel: Link relation type, type: Attributes for target IRI }
+ * Use case :
+ * We can configure this section to determine what actions a user has access to.
+ * Therefore, the client does not need to know anything about roles or states of entities.
+ * All the actions on the screen are enabled/disabled/visible based on the presence of links.
+ * @param {object} request - Express request object.
+ * @returns {object} hateoas_structure - The hateoas structure RFC 5988 format.
+ */
+function creat_hateoas_structure(request, collection = false) {
+    const hateoas_object = {};
+    const links_tab = [];
+    const self = {
+        href: `${request.protocol + '://' + request.get('host') + request.originalUrl}`,
+        rel: `self`,
+        type: `${request.method}`,
+    };
+    links_tab.push(self);
+    if(collection) {
+        hateoas_object.web_pages = paginate(request, self.href);
+    }
+    hateoas_object.web_links = links_tab;
+    // you can add some hateoas logic here
+
+    return hateoas_object;
+}
+
+function paginate(request, self) {
+    request.query.offset = request.query.offset + 1;
+    return {
+        self: `${self}`,
+        next: '',
+        prev: '',
+    }
+}
+
+
+/**
  * Middleware ExpressResponseController.
  *
  * @module ExpressResponseController
@@ -46,80 +86,88 @@ function message_error(options) {
 module.exports.ExpressResponseController = (request, response) => {
     try {
         switch (request._type_content) {
-        case 'object': {
-            const resource = request._resource !== undefined ? request._resource : {};
-            const structure = create_structure(request._resource_type, resource, { href: `https://mylocaldomain.net/api${request.url}` });
-            structure._request_id = request._request_id;
-            response.status(httpStatus.OK).json(structure);
-            break;
+            case 'object': {
+                const resource = request._resource !== undefined ? request._resource : {};
+                const structure = create_structure(request._resource_type, resource, creat_hateoas_structure(request, true));
+                structure._request_id = request._request_id;
+                response.status(httpStatus.OK).json(structure);
+                break;
+            }
+            case 'collection': {
+                const resource = request._resource !== undefined ? request._resource : {};
+                const structure = create_structure(request._resource_type, resource, creat_hateoas_structure(request, true));
+                structure._request_id = request._request_id;
+                response.status(httpStatus.OK).json(structure);
+                break;
+            }
+            case 'bad_request_with_errors': {
+                request._resource = message_error({
+                    api_status_code: request._api_status_code ? request._api_status_code : 4000,
+                    api_status_message: httpStatus['400_NAME'],
+                    details: request._details ? request._details : [],
+                });
+                const structure = create_structure('', request._resource, {self: request.url});
+                structure._request_id = request._request_id;
+                response.status(httpStatus.BAD_REQUEST).json(structure)
+                    .end();
+                break;
+            }
+            case 'internal_server_with_errors': {
+                request._resource = message_error({
+                    api_status_code: request._api_status_code ? request._api_status_code : 5000,
+                    api_status_message: httpStatus['500_NAME'],
+                    request_id: request._request_id,
+                    details: request._details ? request._details : [],
+                });
+                const structure = create_structure('', request._resource, {self: request.url});
+                structure._request_id = request._request_id;
+                response.status(httpStatus.INTERNAL_SERVER_ERROR).json(structure)
+                    .end();
+                break;
+            }
+            case 'not_found_with_errors': {
+                request._resource = message_error({
+                    api_status_code: request._api_status_code ? request._api_status_code : 4004,
+                    api_status_message: httpStatus['404_NAME'],
+                    request_id: request._request_id,
+                    details: request._details ? request._details : [],
+                });
+                const structure = create_structure('', request._resource, {self: request.url});
+                structure._request_id = request._request_id;
+                response.status(httpStatus.NOT_FOUND).json(structure)
+                    .end();
+                break;
+            }
+            case 'conflict_with_errors': {
+                request._resource = message_error({
+                    api_status_code: request._api_status_code ? request._api_status_code : 4009,
+                    api_status_message: httpStatus['409_NAME'],
+                    request_id: request._request_id,
+                    details: request._details ? request._details : [],
+                });
+                const structure = create_structure('', request._resource, {self: request.url});
+                structure._request_id = request._request_id;
+                response.status(httpStatus.CONFLICT).json(structure)
+                    .end();
+                break;
+            }
+            default: {
+                request._resource = message_error({
+                    api_status_code: request._api_status_code ? request._api_status_code : 5000,
+                    api_status_message: httpStatus['500_NAME'],
+                    request_id: request._request_id,
+                    details: [{message: 'Type_Content is not defined!'}],
+                });
+                const structure = create_structure('', request._resource, {self: request.url});
+                structure._request_id = request._request_id;
+                response.status(httpStatus.INTERNAL_SERVER_ERROR).json(structure)
+                    .end();
+                break;
+            }
         }
-        case 'bad_request_with_errors': {
-            request._resource = message_error({
-                api_status_code: request._api_status_code ? request._api_status_code : 4000,
-                api_status_message: httpStatus['400_NAME'],
-                details: request._details ? request._details : [],
-            });
-            const structure = create_structure('', request._resource, { self: request.url });
-            structure._request_id = request._request_id;
-            response.status(httpStatus.BAD_REQUEST).json(structure)
-                .end();
-            break;
-        }
-        case 'internal_server_with_errors': {
-            request._resource = message_error({
-                api_status_code: request._api_status_code ? request._api_status_code : 5000,
-                api_status_message: httpStatus['500_NAME'],
-                request_id: request._request_id,
-                details: request._details ? request._details : [],
-            });
-            const structure = create_structure('', request._resource, { self: request.url });
-            structure._request_id = request._request_id;
-            response.status(httpStatus.INTERNAL_SERVER_ERROR).json(structure)
-                .end();
-            break;
-        }
-        case 'not_found_with_errors': {
-            request._resource = message_error({
-                api_status_code: request._api_status_code ? request._api_status_code : 4004,
-                api_status_message: httpStatus['404_NAME'],
-                request_id: request._request_id,
-                details: request._details ? request._details : [],
-            });
-            const structure = create_structure('', request._resource, { self: request.url });
-            structure._request_id = request._request_id;
-            response.status(httpStatus.NOT_FOUND).json(structure)
-                .end();
-            break;
-        }
-        case 'conflict_with_errors': {
-            request._resource = message_error({
-                api_status_code: request._api_status_code ? request._api_status_code : 4009,
-                api_status_message: httpStatus['409_NAME'],
-                request_id: request._request_id,
-                details: request._details ? request._details : [],
-            });
-            const structure = create_structure('', request._resource, { self: request.url });
-            structure._request_id = request._request_id;
-            response.status(httpStatus.CONFLICT).json(structure)
-                .end();
-            break;
-        }
-        default: {
-            request._resource = message_error({
-                api_status_code: request._api_status_code ? request._api_status_code : 5000,
-                api_status_message: httpStatus['500_NAME'],
-                request_id: request._request_id,
-                details: [{ message: 'Type_Content is not defined!' }],
-            });
-            const structure = create_structure('', request._resource, { self: request.url });
-            structure._request_id = request._request_id;
-            response.status(httpStatus.INTERNAL_SERVER_ERROR).json(structure)
-                .end();
-            break;
-        }
-        }
-    } catch (e) {
-        console.error(e.message);
+    } catch (error) {
+        console.error(error.message);
+        throw new Error(`ExpressResponseController Error! ${error}`);
     } finally {
         /**
          * We can add interesting features here if we want...

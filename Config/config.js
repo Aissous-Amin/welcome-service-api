@@ -44,6 +44,9 @@ const DomainCheck = (config) => {
     if (!config.variables.NODE_ENV) {
         throw new Error('+ Important warning: config.variables.NODE_ENV is empty. It should be set to the fully qualified environment of the app.');
     }
+    if (!config.API_VERSION) {
+        throw new Error('+ Important warning: config.API_VERSION is empty. It should be set to the fully qualified environment of the app.');
+    }
 };
 
 /**
@@ -53,15 +56,10 @@ const DomainCheck = (config) => {
  */
 const initGlobalConfig = () => {
     EnvironmentVariable();
-    const config = Object.assign(defaultConfig, environmentConfig || {});
+    const config = Object.assign(defaultConfig, environmentConfig || {}, {API_VERSION: pkg.version || 'NoN'});
     DomainCheck(config);
     return config;
 };
-
-/**
- * Set configuration object.
- */
-global.api_version = pkg.version ? pkg.version : 'Non';
 
 /**
  * Set configuration object.

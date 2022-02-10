@@ -11,10 +11,13 @@ const messageSchema = new Schema({
     },
 });
 
-messageSchema.virtual('messages', {
+/*messageSchema.virtual('messages', {
     ref: 'Message', // The model to use
     localField: '_id', // Find message where `localField`
     foreignField: 'message', // is equal to `foreignField`
-});
+});*/
 
-module.exports.Messages = mongoose.model('Message', messageSchema);
+/*Compiling mongoose Schema to a Model*/
+const Message = mongoose.model('Message', messageSchema);
+
+module.exports.Messages = Message;

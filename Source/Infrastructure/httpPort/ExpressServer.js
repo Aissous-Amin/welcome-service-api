@@ -2,7 +2,7 @@ const Express = require('./Express');
 const http = require('http');
 const persistence = require(__moduleAliases.Persistance);
 
-// const { Messages } = persistence.mongoose.schemas.messages;
+const { Messages } = persistence.mongoose.schemas.messages;
 
 /** @memberof Infrastructure/ports/http */
 
@@ -22,7 +22,7 @@ class ExpressServer {
         /** init connection with Mongoose data base. */
         await persistence.mongoose.database.init();
         /** Implement data into our Mongoose data base. */
-        //await persistence.mongoose.database.import_data({Messages});
+        // await persistence.mongoose.database.import_data({ Messages });
         /** @type {object} */
         const app = Express.init();
         /** init connection with APM agent. */
@@ -55,8 +55,8 @@ class ExpressServer {
         const app = await ExpressServer.init(middlewares);
         await this.http_listen(app);
         console.log(__config.startMessage);
-        console.log(`${__config.app.title} VERSION ${global.api_version}`);
-        console.log(`Environnement: ${process.env.NODE_ENV || 'test'} `);
+        console.log(`${__config.app.title} VERSION ${__config.API_VERSION}`);
+        console.log(`Environnement: ${process.env.NODE_ENV}`);
         return app;
     }
 

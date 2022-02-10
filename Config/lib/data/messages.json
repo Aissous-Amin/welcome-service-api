@@ -1,18 +1,14 @@
 [
   {
-    "message_id": 1,
     "message": "Welcome to API service - version 1"
   },
   {
-    "message_id": 2,
     "message": "Welcome to API service - version 2"
   },
   {
-    "message_id": 3,
     "message": "Welcome to API service - version 3"
   },
   {
-    "message_id": 4,
     "message": "Welcome to API service - version 4"
   }
 ]
