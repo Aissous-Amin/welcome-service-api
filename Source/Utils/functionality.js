@@ -11,14 +11,21 @@ const moment = require("moment");
  */
 function parse_url_page(url, page, objectPerPage, count) {
     const offset = page !== undefined ? `offset=${page}` : `offset=1`;
-    const limit = objectPerPage !== undefined ? `limit=${objectPerPage}` : `limit=10`;
-    page = parseInt(page, 10) >= 0 ? page : 0;
+    const limit = objectPerPage !== undefined ? `limit=${objectPerPage}` : `limit=5`;
+    page = parseInt(page, 10) > 0 ? page : 1;
+    objectPerPage = parseInt(objectPerPage, 10) > 0 ? objectPerPage : 5;
     const total_pages_number = Math.floor(parseInt(count) / parseInt(objectPerPage));
-    const skip_url = url.indexOf("?") > -1 ? `&${offset}` : `?${offset}`;
-    const limit_url = url.indexOf("?") > -1 ? `&${limit}` : `?${limit}`;
-    const self = url.indexOf("offset=") > -1
-            ? url.replace(/offset=[^&]+/, `offset=${page}`)
-            : url + skip_url + limit_url;
+    url = url.indexOf("?") > -1 ? `${url}` : `${url}?`;
+    const skip_url = url.indexOf("offset=") > -1 ? `` : `&${offset}`;
+    const limit_url = url.indexOf("limit=") > -1 ? `` : `&${limit}`;
+    if(url.indexOf("offset=") > -1) {
+        url.replace(/offset=[^&]+/, `offset=${page}`)
+    } else {
+        url += skip_url;
+    }
+    if(!url.indexOf("limit=") > -1) {
+        url += limit_url;
+    }
     const next =  parseInt(page) >= total_pages_number
         ? ''
         : url.replace(/offset=[^&]+/, `offset=${Math.floor(parseInt(page) + 1)}`);
@@ -28,7 +35,7 @@ function parse_url_page(url, page, objectPerPage, count) {
     return {
         total_object_number: count,
         total_pages_number,
-        self,
+        self: url,
         next,
         prev,
     };
