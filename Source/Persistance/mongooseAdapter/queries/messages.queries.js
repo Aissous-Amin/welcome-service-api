@@ -3,20 +3,40 @@ const { Messages } = require('../schemas/messages.schemas');
 /**
  * Allows to find message by message_id.
  *
- * @param {number} bandIds - List of band id.
- * @returns {object} Result - All concerts with details of band and venue information.
+ * @param {Number} messages_id - List of band id.
+ * @returns {object} Result - Messages informations.
  */
-function get_message_by_id(message_id) {
-    /*return Messages.find({
-        message_id: message_id
-    });*/
+function get_message_by_id(messages_id) {
+    return Messages.find({ _id: messages_id});
+}
 
+/**
+ * Allows to get all message collection.
+ *
+ * @param {Number} offset - Page number.
+ * @param {Number} limit - Limit per page.
+ * @param {String} sort - Sort by element.
+ * @param {Number} order - Order Asc= 1, Desc = -1.
+ * @returns {object} Result - All messages with details information.
+ */
+function get_message_collection(offset, limit, sort, order) {
+    const skip = Math.floor((limit * offset) - limit);
     return Messages.aggregate([
-        { $match: { message_id: { $in: message_id } } },
+        { $sort: { sort: parseInt(order) } },
+        { $skip: skip },
+        { $limit: parseInt(limit) },
     ]);
 }
+
+function get_message_count() {
+    return Messages.countDocuments();
+}
+
+
 
 
 module.exports = {
     get_message_by_id,
+    get_message_collection,
+    get_message_count
 };

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const env = require('../../../Config/env/variables');
 const fs = require('fs');
+const path = require("path");
 
 
 let pool = null;
@@ -83,7 +84,7 @@ class MONGOOSE {
     static async import_data(data) {
         try {
             const promises = [];
-            const messages = JSON.parse(fs.readFileSync(`${__dirname}/data/messages.json`, 'utf-8'));
+            const messages = JSON.parse(fs.readFileSync(`${path.join(process.cwd(), '/Config/lib/data/messages.json')}`, 'utf-8'));
             promises.push(data.Messages.insertMany(messages));
             console.log('Importing data to mongodb database...');
             await Promise.all(promises);

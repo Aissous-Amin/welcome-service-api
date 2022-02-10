@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "Welcome Service",
-    "description": "Welcome Service returns a welcome message.",
+    "description": "Welcole Service returns a welcome message.",
     "version": "1.0.0",
     "contact": {
       "name": "Aissous Amin",
@@ -11,7 +11,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3001/api",
+      "url": "https://c30b4b58d100.ngrok.io/api",
       "description": "Local Server Backend"
     }
   ],
@@ -63,12 +63,12 @@
                       "_resource_type": "Messages_Welcome_Collection_Resource",
                       "_resource": {
                         "message": [
-                          "Hello World!"
+                          "string"
                         ],
-                        "UserAgent": "PostMa,RunTime/7.29.0"
+                        "UserAgent": "string"
                       },
                       "_links": {},
-                      "_etag": "February 7th 2022, 8:31:33 pm"
+                      "_etag": "string"
                     }
                   }
                 }
@@ -100,8 +100,7 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Resource_Error_Message"
-                },
-                "examples": {}
+                }
               }
             }
           },
@@ -220,7 +219,7 @@
                     "_etag": {
                       "type": "string",
                       "minLength": 1,
-                      "format": "Date",
+                      "format": "date-time",
                       "example": "December 2nd 2021, 12:14:41 am",
                       "readOnly": true
                     }
@@ -479,12 +478,6 @@
   "security": [
     {
       "Ocp-Apim-Subscription-Key": []
-    }
-  ],
-  "tags": [
-    {
-      "name": "Messages",
-      "description": "All endpoints taged with this TAG reference the message resource collection"
     }
   ]
 }

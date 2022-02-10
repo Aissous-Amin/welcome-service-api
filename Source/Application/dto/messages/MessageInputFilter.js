@@ -2,17 +2,36 @@ const Joi = require('@hapi/joi');
 const CommonErrorMessage = require('../common/CommonErrorMessage');
 
 /**
- * @typedef {object} CommonFilter
- * @property {Array} bandIds - Array of string (or comma separated list).
- * @property {number} latitude - Latitude.
- * @property {number} longitude - Longitude.
- * @property {number} radius - Radius in kilometers.
+ * We doo some cool stuff here to avoid Express query parsing error with Joi Validator
  */
-const MessageInputFilter = Joi.object({
-    message_id: Joi.array().required()
+
+/**
+ * GetMessageCollectionFilter Validator
+ * @typedef {object} CommonFilter
+ * @property {string} message_id - Message id.
+ * @property {string} message - Message content.
+ */
+const GetMessageCollectionFilter = Joi.object({
+    offset: Joi.string()
         .error(CommonErrorMessage.validate),
-    message: Joi.string()
+    limit: Joi.number().integer().max(10),
+    sort: Joi.string().valid('_id'),
+    order: Joi.string().valid('1', '-1'),
+}).error(CommonErrorMessage.validate_global);
+
+/**
+ * GetMessageByIdFilter Validator
+ * @typedef {object} CommonFilter
+ * @property {string} message_id - Message id.
+ * @property {string} message - Message content.
+ */
+const GetMessageByIdFilter = Joi.object({
+    message_id: Joi.string().required()
         .error(CommonErrorMessage.validate),
 }).error(CommonErrorMessage.validate_global);
 
-module.exports = MessageInputFilter;
+
+module.exports = {
+    GetMessageCollectionFilter,
+    GetMessageByIdFilter
+};

@@ -48,6 +48,13 @@ class CommonErrorMessage {
                         type: functionalMessage.messages.MESSAGE_ID.TYPE,
                     };
                     break;
+                case 'any.only':
+                    err.message = {
+                        message: `Les valeurs attendues pour le champs ${err.local.key} ne sont autorisées : ${err.local.value} ! les valeurs autorisées sont les suivant : ${err.local.valids}`,
+                        id: functionalMessage.messages.MESSAGE_ID.ID,
+                        type: functionalMessage.messages.MESSAGE_ID.TYPE,
+                    };
+                    break;
                 case 'any.required':
                     err.message = {
                         message: `l'attribut ${err.local.key} est obligatoire`,
@@ -60,6 +67,14 @@ class CommonErrorMessage {
                         message: `${functionalMessage.common.OBJECT_UNKNOWN.MESSAGE} : ${err.local.key} = ${err.local.value}`,
                         id: functionalMessage.common.OBJECT_UNKNOWN.ID,
                         type: functionalMessage.common.OBJECT_UNKNOWN.TYPE,
+                    };
+                    break;
+                case 'number.min':
+                case 'number.max':
+                    err.message = {
+                        message: `Les valeurs attendues pour le champs ${err.local.key} ne sont autorisées : ${err.local.value}`,
+                        id: functionalMessage.messages.MESSAGE_ID.ID,
+                        type: functionalMessage.messages.MESSAGE_ID.TYPE,
                     };
                     break;
                 default:

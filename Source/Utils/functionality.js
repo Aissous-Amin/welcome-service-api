@@ -30,7 +30,17 @@ function extend(Child, Parent) {
     Child.prototype.constructor = Child;
 }
 
+/**
+ * escapeRegex Function
+ * Regex function for search functionality
+ * @param {string} string - char to pars
+ */
+const escapeRegex = (string) => {
+    return string.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
+
 module.exports = {
     parse_url_page,
     extend,
+    escapeRegex,
 };

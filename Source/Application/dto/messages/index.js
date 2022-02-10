@@ -1,5 +1,6 @@
-const MessageInputFilter = require('./MessageInputFilter');
+const { GetMessageCollectionFilter, GetMessageByIdFilter } = require('./MessageInputFilter');
 
 module.exports = {
-    MessageInputFilter,
+    GetMessageCollectionFilter,
+    GetMessageByIdFilter,
 };

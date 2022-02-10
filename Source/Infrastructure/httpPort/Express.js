@@ -28,7 +28,7 @@ class Express {
             includeSubDomains: true,
             force: true,
         }));
-        if (['developpement'].includes(process.env.NODE_ENV)) {
+        if (['development'].includes(process.env.NODE_ENV)) {
             app.use((req, res, next) => {
                 res.setHeader('Access-Control-Allow-Origin', '*');
                 res.setHeader(

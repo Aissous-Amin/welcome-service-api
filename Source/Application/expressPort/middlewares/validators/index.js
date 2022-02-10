@@ -1,7 +1,6 @@
-const put_messages_welcome = require('./put_messages.validator.middleware.application');
-const get_messages_welcome = require('./get_messages.validator.middleware.application');
+const { get_messages_collection_validator, get_messages_by_id_validator } = require('./messages.validator.middleware.application');
 
 module.exports = {
-    put_messages_welcome,
-    get_messages_welcome,
+    get_messages_collection_validator,
+    get_messages_by_id_validator,
 };
