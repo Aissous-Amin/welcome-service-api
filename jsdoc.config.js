@@ -14,7 +14,7 @@ module.exports = {
         dateFormat: 'ddd MMM Do YYYY',
         outputSourceFiles: true,
         outputSourcePath: true,
-        systemName: 'Concerts Service API',
+        systemName: 'Messages Service API',
         footer: '',
         copyright: 'Aissous-Amin',
         navType: 'vertical',
@@ -29,7 +29,7 @@ module.exports = {
         private: true,
         recurse: true,
         sortByName: true,
-        stripModuleName: 'concerts-service',
+        stripModuleName: 'messages-service',
     },
     markdown: {
         parser: 'gfm',

@@ -44,6 +44,7 @@ async function get_messages_collection(request, response, next) {
         if (request._type_content === undefined) {
             /** Split messages_id query to an array of id. */
             const result = await use_case.queries.read_messages_collection_service(request.query.offset, request.query.limit, request.query.sort, request.query.order);
+            request.query.count = await use_case.queries.read_messages_count();
             creat_message_response_structure(request, result, 'Welcome_Messages_Collection_Resource', 'collection');
         }
     } catch (e) {

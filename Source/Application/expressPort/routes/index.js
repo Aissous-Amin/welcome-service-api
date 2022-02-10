@@ -15,7 +15,7 @@ module.exports = (app) => {
     const versionRouter = express.Router();
 
     /**
-     * End-point service concerts.
+     * End-point service.
      */
     const categories = ['util'];
     categories.forEach((categorie) => {

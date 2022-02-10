@@ -12,13 +12,22 @@ function read_messages_collection_service(offset=1, limit=10, sort= '_id', order
 }
 
 /**
- * Allows to message by id.
+ * Allows to find message by id.
  *
  * @param {number} message_id - message id.
  * @returns {object} Result - All welcome messages with details information.
  */
 function read_messages_by_id_service(message_id) {
         return persistance.mongoose.queries.messages.get_message_by_id(message_id);
+}
+
+/**
+ * Get message count.
+ *
+ * @returns {object} Result - All welcome messages with details information.
+ */
+function read_messages_count() {
+    return persistance.mongoose.queries.messages.get_message_count();
 }
 
 /**
@@ -30,4 +39,5 @@ function read_messages_by_id_service(message_id) {
 module.exports = {
     read_messages_collection_service,
     read_messages_by_id_service,
+    read_messages_count,
 };

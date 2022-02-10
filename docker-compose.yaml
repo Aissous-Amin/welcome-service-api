@@ -15,7 +15,7 @@ services:
       - NODE_ENV=development
       - APP_PREFIX=/api
       - APP_SERVER_PORT=3000
-      - DATABASE_SERVER=mongodb://mongodb/concerts_service_database
+      - DATABASE_SERVER=mongodb://mongodb/messages_service_database
     working_dir: /usr/src/service
     command: bash -c "npm install && npm start"
     ports:
