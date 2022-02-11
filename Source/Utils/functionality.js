@@ -14,24 +14,14 @@ function parse_url_page(url, page, objectPerPage, count) {
     const limit = objectPerPage !== undefined ? `limit=${objectPerPage}` : `limit=5`;
     page = parseInt(page, 10) > 0 ? page : 1;
     objectPerPage = parseInt(objectPerPage, 10) > 0 ? objectPerPage : 5;
-    const total_pages_number = Math.floor(parseInt(count) / parseInt(objectPerPage));
+    const total_pages_number = Math.ceil(parseInt(count) / parseInt(objectPerPage));
     url = url.indexOf("?") > -1 ? `${url}` : `${url}?`;
     const skip_url = url.indexOf("offset=") > -1 ? `` : `&${offset}`;
     const limit_url = url.indexOf("limit=") > -1 ? `` : `&${limit}`;
-    if(url.indexOf("offset=") > -1) {
-        url.replace(/offset=[^&]+/, `offset=${page}`)
-    } else {
-        url += skip_url;
-    }
-    if(!url.indexOf("limit=") > -1) {
-        url += limit_url;
-    }
-    const next =  parseInt(page) >= total_pages_number
-        ? ''
-        : url.replace(/offset=[^&]+/, `offset=${Math.floor(parseInt(page) + 1)}`);
-    const prev = parseInt(page) > 1
-        ? url.replace(/offset=[^&]+/, `offset=${Math.floor(parseInt(page) - 1)}`)
-        : '';
+    url = url.indexOf("offset=") > -1 ? url.replace(/offset=[^&]+/, `offset=${page}`) : url += skip_url;
+    if(!url.indexOf("limit=") > -1) url += limit_url;
+    const next =  parseInt(page) >= total_pages_number ? '' : url.replace(/offset=[^&]+/, `offset=${Math.floor(parseInt(page) + 1)}`);
+    const prev = parseInt(page) > 1 ? url.replace(/offset=[^&]+/, `offset=${Math.floor(parseInt(page) - 1)}`) : '';
     return {
         total_object_number: count,
         total_pages_number,
@@ -42,7 +32,8 @@ function parse_url_page(url, page, objectPerPage, count) {
 }
 
 /**
- * This function is a Intermediate Function Inheritance - une fonction intermédiaire qui permet de mettre en place l'héritage et de changer la chaine prototypique
+ * This function is a Intermediate Function Inheritance
+ * Une fonction intermédiaire qui permet de mettre en place l'héritage et de changer la chaine prototypique
  *
  * @param {Object} Child - Object Child
  * @param {Object} Parent - Object Parent
@@ -124,11 +115,76 @@ function creat_hateoas_structure(request, collection = false) {
     return hateoas_object;
 }
 
+/**
+ * creat_response_structure Response Controller System For message resource endpoint.
+ * This function allows to build the message object
+ * @module Message
+ * @param request
+ * @param resource
+ * @param resource_type
+ * @param type_content
+ * @param error
+ * @returns {*}
+ */
+function creat_response_structure(request, resource, resource_type, type_content, error = false) {
+    if (!error) {
+        request._resource = {
+            message: resource,
+            UserAgent: request.headers['user-agent'],
+        };
+    } else {
+        if(Array.isArray(resource)) {
+            request._details = resource;
+        } else {
+            request._details = [{message: resource}];
+        }
+    }
+    request._resource_type = resource_type;
+    request._type_content = type_content;
+    return request;
+}
+
+function query_parser(elements) {
+    Object.keys(elements).map(key => parseInt(elements[key]));
+    return elements;
+}
+
+function objectParsInt(obj) {
+    const res = {}
+    Object.keys(obj).forEach(key => {
+        res[key] = {};
+        Object.keys(obj[key]).forEach(temp => {
+            res[key][temp] = !isNaN(obj[key][temp])
+                ? parseInt(obj[key][temp], 10)
+                : obj[key][temp];
+        });
+    });
+    return res;
+}
+
+/**
+ * Used to validate the input object based on the joi schema.
+ *
+ * @param {object} object - Object input to validate.
+ * @param {object} joiSchema - Joi schema object model.
+ * @returns {{valid: boolean, validation_errors: []}}
+ */
+function validate_input_object(object, joiSchema) {
+    const { error } = joiSchema.validate(object);
+    const valid = error == null;
+    const validation_errors = error ? error.details.map(elm => elm.message) : [];
+    return { valid, validation_errors, error };
+}
+
 module.exports = {
     parse_url_page,
     extend,
     escapeRegex,
     message_error,
     create_structure,
-    creat_hateoas_structure
+    creat_hateoas_structure,
+    creat_response_structure,
+    query_parser,
+    objectParsInt,
+    validate_input_object,
 };
