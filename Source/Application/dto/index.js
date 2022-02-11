@@ -1,5 +1,5 @@
-const messages = require('./messages');
+const messagesInputFilter = require('./MessageInputFilter');
 
 module.exports = {
-    messages,
+    messagesInputFilter,
 };
