@@ -7,7 +7,8 @@
     "lint": "eslint --max-warnings=0 ./Source --ext .js",
     "doc": "jsdoc -c jsdoc.config.js -r",
     "build": "npm run lint && npm test && jsdoc -c jsdoc.config.js -r",
-    "sonar": "node sonar-project.js"
+    "sonar": "node sonar-project.js",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",
@@ -31,6 +32,8 @@
     "toobusy-js": "^0.5.1"
   },
   "devDependencies": {
+    "@commitlint/cli": "^16.1.0",
+    "@commitlint/config-conventional": "^16.0.0",
     "better-docs": "1.4.7",
     "chai": "4.2.0",
     "eslint": "4.18.2",
@@ -39,6 +42,8 @@
     "eslint-plugin-jsdoc": "21.0.0",
     "eslint-plugin-promise": "4.2.1",
     "faker": "4.1.0",
+    "git-precommit-checks": "^3.0.7",
+    "husky": "^7.0.4",
     "nyc": "^15.0.0",
     "sinon": "8.1.1",
     "supertest": "^4.0.2"
