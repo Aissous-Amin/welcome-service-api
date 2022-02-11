@@ -1,4 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
+echo 'You can add some cool stuff here : ./husky/pre-push !'
 npx --no-install validate-branch-name
