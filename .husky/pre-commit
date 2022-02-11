@@ -1,5 +1,6 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-echo 'Add your script pre-commit here !'
+echo 'You can add some cool stuff here : ./husky/pre-commit !'
 npx --no-install lint-staged
+npx --no-install git-precommit-checks
