@@ -1,6 +1,4 @@
-/* eslint-disable global-require */
 const express = require('express');
-
 const { ResponseController } = require(__moduleAliases.Infrastructure).http;
 
 /**
@@ -15,7 +13,8 @@ module.exports = (app) => {
     const versionRouter = express.Router();
 
     /**
-     * End-point service.
+     * End-point service. make sur to add all new resource to this categories list.
+     * This categories list must have the same name of your resource folder !
      */
     const categories = ['util'];
     categories.forEach((categorie) => {
