@@ -14,6 +14,7 @@ This is an ExpressJs application service, there are two ways to launch the appli
     - Install [mongodb](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/#install-mongodb-community-edition)
     - Run the following command :
         - `npm install`
+        - `npm run prepare`
         - `npm run start`
         
 3. The project should be imported from the [GitHub](https://github.com/Aissous-Amin/wemaintain-backend-test/tree/develop)
@@ -22,12 +23,16 @@ This is an ExpressJs application service, there are two ways to launch the appli
               
 4. Generation of JsDoc documentation:
      - `npm run doc`
-     
+
 5. to consult the interface documentation of our service you can consult the swagger here: `Docs/swagger`
+
+6. Get help to format your commit message with Commitizen :
+    - `npx cz`
+   
      
 **Note** 
 - you can ping the service with this command : 
-    - `curl localhost:3000/api/welcome`
+    - `curl localhost:3000/api/messages`
 
 ## Architecture
 
