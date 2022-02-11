@@ -8,7 +8,7 @@ services:
     networks:
       - back
   nodejs:
-    image: node:12
+    image: node:14
     volumes:
       - .:/usr/src/service
     environment:
@@ -19,7 +19,7 @@ services:
     working_dir: /usr/src/service
     command: bash -c "npm install && npm start"
     ports:
-      - 3001:3001
+      - 80:3000
     networks:
       - back
     depends_on:

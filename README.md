@@ -1,7 +1,7 @@
-# API Backend
-**Welcome API service**
+# Nodejs Hexagonal Starter Kit
+**A starter kit to master your API development**
 
-## Installation And Project Launch 
+## Installation And Project Launch
 
 This is an ExpressJs application service, there are two ways to launch the application :
 1. With docker-compose
@@ -24,7 +24,7 @@ This is an ExpressJs application service, there are two ways to launch the appli
 4. Generation of JsDoc documentation:
      - `npm run doc`
 
-5. to consult the interface documentation of our service you can consult the swagger here: `Docs/swagger`
+5. to consult the interface documentation of our service you can consult the swagger here: `Docs/api-specification`
 
 6. Get help to format your commit message with Commitizen :
     - `npx cz`
@@ -32,7 +32,7 @@ This is an ExpressJs application service, there are two ways to launch the appli
      
 **Note** 
 - you can ping the service with this command : 
-    - `curl localhost:3000/api/messages`
+    - `curl localhost:80/api/messages`
 
 ## Architecture
 
