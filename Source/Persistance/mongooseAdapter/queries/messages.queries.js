@@ -1,13 +1,13 @@
-const { Messages } = require('../schemas/messages.schemas');
+const { Messages } = require("../schemas/messages.schemas");
 
 /**
  * Allows to find message by message_id.
  *
- * @param {Number} messages_id - List of band id.
+ * @param {Number} messages_id - message id.
  * @returns {object} Result - Messages informations.
  */
 function get_message_by_id(messages_id) {
-    return Messages.find({ _id: messages_id});
+  return Messages.find({ _id: messages_id });
 }
 
 /**
@@ -20,23 +20,20 @@ function get_message_by_id(messages_id) {
  * @returns {object} Result - All messages with details information.
  */
 function get_message_collection(offset, limit, sort, order) {
-    const skip = Math.floor((limit * offset) - limit);
-    return Messages.aggregate([
-        { $sort: { sort: parseInt(order) } },
-        { $skip: skip },
-        { $limit: parseInt(limit) },
-    ]);
+  const skip = Math.floor(limit * offset - limit);
+  return Messages.aggregate([
+    { $sort: { sort: parseInt(order) } },
+    { $skip: skip },
+    { $limit: parseInt(limit) },
+  ]);
 }
 
 function get_message_count() {
-    return Messages.countDocuments();
+  return Messages.countDocuments();
 }
 
-
-
-
 module.exports = {
-    get_message_by_id,
-    get_message_collection,
-    get_message_count
+  get_message_by_id,
+  get_message_collection,
+  get_message_count,
 };
