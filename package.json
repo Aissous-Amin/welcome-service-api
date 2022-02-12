@@ -34,6 +34,7 @@
     "moment": "^2.29.1",
     "mongoose": "^5.11.16",
     "morgan": "~1.9.0",
+    "rotating-file-stream": "^3.0.2",
     "toobusy-js": "^0.5.1"
   },
   "devDependencies": {
