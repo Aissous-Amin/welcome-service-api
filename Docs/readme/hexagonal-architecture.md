@@ -31,6 +31,8 @@ Pour bien comprendre le DDD je vous invite à lire les articles suivants :
 - **Couche Persistance** - Permet de gérer la partie Persistance du service.
 
 
+**DataBanding**
+
 La communication entre les couches peut seulement se faire de manière **descendante**, autrement dit une couche ne peut jamais communiquer directement avec une couche située au-dessus d'elle. Dans une approche stricte, une couche ne peut parler qu'à une couche située directement en dessous d'elle, tandis que l'approche souple permet à une couche de parler à toutes les couches situées en dessous d'elle. Généralement, la couche "interface utilisateur" est appelée "Front End" de notre application et la couche "infrastructure" est appelée "Back End". La partie "intermédiaire", appelée noyau, mais vous pouvez aussi l'appeler le domaine, la logique métier.
 
 La plupart des nouvelles architectures considèrent qu'il n'y a pas de grande différence entre l'interface utilisateur (client web ou application mobile) et la base de données. Un système n'est constitué que de deux parties distinctes : interne, externe. La partie interne est le noyau et la partie externe est l'endroit où vivent l'interface utilisateur et l'infrastructure. Ainsi, selon cette conception du système, notre base de données et notre client web ne sont plus des éléments de premier et de second plan. Ils sont tous deux identiques, en extérieur du système.
