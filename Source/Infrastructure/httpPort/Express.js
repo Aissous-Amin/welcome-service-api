@@ -86,18 +86,13 @@ class Express {
     }
     /** Add Api-Version to All Header Response. */
     app.use((request, response, next) => {
-      response.setHeader(
-        "Api-Version",
-        __config.API_VERSION ? __config.API_VERSION : "NoN"
-      );
+      response.setHeader("Api-Version", __config.API_VERSION ?? "NoN");
       next();
     });
     app.use((request, response, next) => {
       response.setHeader(
         "correlationId",
-        request.headers.correlationid
-          ? request.headers.correlationid
-          : "0000-0000-0000-0000-0000"
+        request.headers.correlationid ?? "0000-0000-0000-0000-0000"
       );
       next();
     });
