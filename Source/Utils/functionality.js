@@ -1,4 +1,5 @@
 const moment = require("moment");
+const { Winston } = require("../Infrastructure/managementAdapters");
 
 /**
  * This function allows us to manage the pagination.
@@ -96,7 +97,7 @@ function message_error(options) {
   message_error_object._api_status_id =
     options.request_id ?? "00000-00000-00000-00000-00000"; // TODO apply the request_id logic, you can use the same correlation id with app insight to propagate the context information across all your services.
   message_error_object._details = options.details ?? [];
-  console.error(`${message_error_object._api_status_message}`);
+  Winston.error(`${message_error_object._api_status_message}`);
   return message_error_object;
 }
 

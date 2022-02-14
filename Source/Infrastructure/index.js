@@ -1,5 +1,7 @@
-const http = require('./httpPort');
+const http = require("./httpPort");
+const managementAdapters = require("./managementAdapters");
 
 module.exports = {
-    http,
+  http,
+  managementAdapters,
 };
