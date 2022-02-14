@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node --trace-warnings server",
+    "startDev": "nodemon server",
     "lint": "eslint --max-warnings=0 ./Source --ext .js",
     "doc": "jsdoc -c jsdoc.config.js -r",
     "build": "npm run lint && npm test && jsdoc -c jsdoc.config.js -r",
@@ -37,7 +38,8 @@
     "passport": "^0.5.2",
     "passport-azure-ad": "^4.3.1",
     "rotating-file-stream": "^3.0.2",
-    "toobusy-js": "^0.5.1"
+    "toobusy-js": "^0.5.1",
+    "winston": "^3.6.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.1.0",
@@ -57,6 +59,7 @@
     "git-precommit-checks": "^3.0.7",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.3",
+    "nodemon": "^2.0.15",
     "nyc": "^15.0.0",
     "prettier": "^2.5.1",
     "sinon": "8.1.1",

@@ -1,7 +1,8 @@
 const Express = require("./Express");
 const http = require("http");
-const Logger = require("../managementAdapters/Logger");
+const { Logger, Winston } = require("../managementAdapters");
 const { Mongoose } = require(__moduleAliases.Persistance);
+const winston = require("winston");
 
 /** @memberof Infrastructure/ports/http */
 
@@ -52,9 +53,9 @@ class ExpressServer {
   static async start(middlewares) {
     const app = await ExpressServer.init(middlewares);
     await this.http_listen(app);
-    console.log(__config.startMessage);
-    console.log(`${__config.app.title} VERSION ${__config.API_VERSION}`);
-    console.log(`Environnement: ${process.env.NODE_ENV}`);
+    Winston.info(__config.startMessage);
+    Winston.info(`${__config.app.title} VERSION ${__config.API_VERSION}`);
+    Winston.info(`Environnement: ${process.env.NODE_ENV}`);
     return app;
   }
 
