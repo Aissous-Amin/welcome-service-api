@@ -101,6 +101,8 @@ class Express {
       );
       next();
     });
+    // la meilleure méthode pour mettre en place la compression consiste à l’implémenter au niveau d’un proxy inverse (Nginx for example check this http://nginx.org/en/docs/http/ngx_http_gzip_module.html)
+    // app.use(compression())
     this.initHelmetHeaders(app);
     return app;
   }
