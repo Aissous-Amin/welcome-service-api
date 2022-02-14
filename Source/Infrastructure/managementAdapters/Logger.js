@@ -1,5 +1,6 @@
 const fs = require("fs");
 const rfs = require("rotating-file-stream");
+const Winston = require("./Winston");
 const morganLogger = require("morgan");
 
 /**
@@ -59,6 +60,8 @@ class Logger {
       maxSize: "5G",
       maxFiles: 15,
     });
+    // De-comment this line if you want to integration Morgna logger with Winston ! it’s very simple ;)
+    // accessLogStream.write = (message) => Winston.http(message);
     const errorLogStream = rfs.createStream(options.logsFileError, {
       size: "10M",
       interval: "1d", // rotate daily
