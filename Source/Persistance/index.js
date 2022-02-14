@@ -1,9 +1,9 @@
-const mongoose = require('./mongooseAdapter');
-const appInsight = require('./applicationInsightAdapter');
-const elasticApm = require('./elasticApmAdapter');
+const Mongoose = require("./mongooseAdapter");
+const AppInsight = require("./applicationInsightAdapter");
+const ElasticApm = require("./elasticApmAdapter");
 
 module.exports = {
-    mongoose,
-    appInsight,
-    elasticApm,
+  Mongoose,
+  AppInsight,
+  ElasticApm,
 };

@@ -1,5 +1,5 @@
-const messages = require('./messages.schemas');
+const message = require("./messages.schemas");
 
 module.exports = {
-    messages,
+  message,
 };

@@ -1,14 +1,14 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
 const messageSchema = new Schema({
-    message_id: {
-        type: String,
-    },
-    message: {
-        type: String,
-    },
+  message_id: {
+    type: String,
+  },
+  message: {
+    type: String,
+  },
 });
 
 /*messageSchema.virtual('messages', {
@@ -18,6 +18,6 @@ const messageSchema = new Schema({
 });*/
 
 /*Compiling mongoose Schema to a Model*/
-const Message = mongoose.model('Message', messageSchema);
+const Message = mongoose.model("Message", messageSchema);
 
-module.exports.Messages = Message;
+module.exports = Message;

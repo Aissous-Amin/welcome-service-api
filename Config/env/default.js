@@ -1,13 +1,12 @@
 const path = require("path");
 
-if (process.env.NODE_ENV !== "production") {
+if (process.env?.NODE_ENV !== "production") {
   const dir = path.join(process.cwd(), "/Config/env/.env");
   require("dotenv").config({ path: dir });
 }
 
 const variables = require("./variables");
 
-// require('dotenv').config()
 global.__base = process.cwd();
 global.__baseSrouce = `${__base}/Source`;
 
@@ -42,8 +41,8 @@ module.exports = {
   app: {
     title: "Starter-Hexagonal-Kit-Service ",
     description:
-      "Starter-Hexagonal-Kit-Service est un starter kit qui vous aident à démarrer votre projet sur des bonnes bases",
+      "Starter-Hexagonal-Kit-Service : démarrer votre projet sur des bonnes bases",
     keywords:
-      "API, RESful, backend, hexagonal, cleanCode, cleanArchitecture, DDD, test, messages, express, node.js, morgan, husky, pre-commit, pre-push, eslint, sonar, docker",
+      "starterKit, API, RESful, backend, hexagonal, cleanCode, cleanArchitecture, DDD, express, node.js, morgan, husky, pre-commit, pre-push, eslint, sonar, docker",
   },
 };

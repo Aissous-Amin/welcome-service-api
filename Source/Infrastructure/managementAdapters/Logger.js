@@ -30,8 +30,8 @@ class Logger {
    */
   initDir(
     options = {
-      logsFile: __config.variables.LOG_ACCESS_FILE || "access.log",
-      logsFileError: __config.variables.LOG_ERROR_FILE || "error.log",
+      logsFile: __config.variables.LOG_ACCESS_FILE ?? "access.log",
+      logsFileError: __config.variables.LOG_ERROR_FILE ?? "error.log",
     }
   ) {
     if (!fs.existsSync(this.dirName)) fs.mkdirSync(this.dirName);
