@@ -49,7 +49,7 @@ class Logger {
     morganLogger.token("responseBody", (req) => {
       if (["POST", "PUT", "DELETE", "PATCH"].includes(req.method))
         return JSON.stringify(req.body);
-      return JSON.stringify({ data: "NoN" });
+      return "";
     });
     const accessLogStream = rfs.createStream(options.logsFile, {
       size: "10M",
