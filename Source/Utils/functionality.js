@@ -10,25 +10,37 @@ const moment = require("moment");
  * @returns {string} URL - URL with limit and skip option.
  */
 function parse_url_page(url, page, objectPerPage, count) {
-    const offset = page !== undefined ? `offset=${page}` : `offset=1`;
-    const limit = objectPerPage !== undefined ? `limit=${objectPerPage}` : `limit=5`;
-    page = parseInt(page, 10) > 0 ? page : 1;
-    objectPerPage = parseInt(objectPerPage, 10) > 0 ? objectPerPage : 5;
-    const total_pages_number = Math.ceil(parseInt(count) / parseInt(objectPerPage));
-    url = url.indexOf("?") > -1 ? `${url}` : `${url}?`;
-    const skip_url = url.indexOf("offset=") > -1 ? `` : `&${offset}`;
-    const limit_url = url.indexOf("limit=") > -1 ? `` : `&${limit}`;
-    url = url.indexOf("offset=") > -1 ? url.replace(/offset=[^&]+/, `offset=${page}`) : url += skip_url;
-    if(!url.indexOf("limit=") > -1) url += limit_url;
-    const next =  parseInt(page) >= total_pages_number ? '' : url.replace(/offset=[^&]+/, `offset=${Math.floor(parseInt(page) + 1)}`);
-    const prev = parseInt(page) > 1 ? url.replace(/offset=[^&]+/, `offset=${Math.floor(parseInt(page) - 1)}`) : '';
-    return {
-        total_object_number: count,
-        total_pages_number,
-        self: url,
-        next,
-        prev,
-    };
+  const offset = page !== undefined ? `offset=${page}` : `offset=1`;
+  const limit =
+    objectPerPage !== undefined ? `limit=${objectPerPage}` : `limit=5`;
+  page = parseInt(page, 10) > 0 ? page : 1;
+  objectPerPage = parseInt(objectPerPage, 10) > 0 ? objectPerPage : 5;
+  const total_pages_number = Math.ceil(
+    parseInt(count) / parseInt(objectPerPage)
+  );
+  url = url.indexOf("?") > -1 ? `${url}` : `${url}?`;
+  const skip_url = url.indexOf("offset=") > -1 ? `` : `&${offset}`;
+  const limit_url = url.indexOf("limit=") > -1 ? `` : `&${limit}`;
+  url =
+    url.indexOf("offset=") > -1
+      ? url.replace(/offset=[^&]+/, `offset=${page}`)
+      : (url += skip_url);
+  if (!url.indexOf("limit=") > -1) url += limit_url;
+  const next =
+    parseInt(page) >= total_pages_number
+      ? ""
+      : url.replace(/offset=[^&]+/, `offset=${Math.floor(parseInt(page) + 1)}`);
+  const prev =
+    parseInt(page) > 1
+      ? url.replace(/offset=[^&]+/, `offset=${Math.floor(parseInt(page) - 1)}`)
+      : "";
+  return {
+    total_object_number: count,
+    total_pages_number,
+    self: url,
+    next,
+    prev,
+  };
 }
 
 /**
@@ -39,8 +51,8 @@ function parse_url_page(url, page, objectPerPage, count) {
  * @param {Object} Parent - Object Parent
  */
 function extend(Child, Parent) {
-    Child.prototype = Object.create(Parent.prototype);
-    Child.prototype.constructor = Child;
+  Child.prototype = Object.create(Parent.prototype);
+  Child.prototype.constructor = Child;
 }
 
 /**
@@ -49,7 +61,7 @@ function extend(Child, Parent) {
  * @param {string} string - char to pars
  */
 const escapeRegex = (string) => {
-    return string.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+  return string.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 };
 
 /**
@@ -61,12 +73,13 @@ const escapeRegex = (string) => {
  * @returns {object} Structure - Final response body object structure.
  */
 function create_structure(resource_type, resource, links) {
-    const structure = {};
-    structure._resource_type = (resource_type !== '' ? resource_type : 'Resource_Error');
-    structure._resource = resource;
-    structure._links = links;
-    structure._etag = moment().format('MMMM Do YYYY, h:mm:ss a');
-    return structure;
+  const structure = {};
+  structure._resource_type =
+    resource_type !== "" ? resource_type : "Resource_Error";
+  structure._resource = resource;
+  structure._links = links;
+  structure._etag = moment().format("MMMM Do YYYY, h:mm:ss a");
+  return structure;
 }
 
 /**
@@ -76,13 +89,15 @@ function create_structure(resource_type, resource, links) {
  * @returns {object} Message_error_object - Error standard object structure.
  */
 function message_error(options) {
-    const message_error_object = {};
-    message_error_object._api_status_code = options.api_status_code || 4000;
-    message_error_object._api_status_message = options.api_status_message || 'Default Message Error';
-    message_error_object._api_status_id = options.request_id || '00000-00000-00000-00000-00000'; // TODO apply the request_id logic, you can use the same correlation id with app insight to propagate the context information across all your services.
-    message_error_object._details = options.details || [];
-    console.error(`${message_error_object._api_status_message}`);
-    return message_error_object;
+  const message_error_object = {};
+  message_error_object._api_status_code = options.api_status_code ?? 4000;
+  message_error_object._api_status_message =
+    options.api_status_message ?? "Default Message Error";
+  message_error_object._api_status_id =
+    options.request_id ?? "00000-00000-00000-00000-00000"; // TODO apply the request_id logic, you can use the same correlation id with app insight to propagate the context information across all your services.
+  message_error_object._details = options.details ?? [];
+  console.error(`${message_error_object._api_status_message}`);
+  return message_error_object;
 }
 
 /**
@@ -98,21 +113,28 @@ function message_error(options) {
  * @returns {object} hateoas_structure - The hateoas structure RFC 5988 format.
  */
 function creat_hateoas_structure(request, collection = false) {
-    const hateoas_object = {};
-    const links_tab = [];
-    const self = {
-        href: `${request.protocol + '://' + request.get('host') + request.originalUrl}`,
-        rel: `self`,
-        type: `${request.method}`,
-    };
-    links_tab.push(self);
-    if(collection) {
-        hateoas_object.web_pages = parse_url_page(self.href, request.query.offset, request.query.limit, request.query.count);
-    }
-    hateoas_object.web_links = links_tab;
-    // you can add some hateoas logic here
+  const hateoas_object = {};
+  const links_tab = [];
+  const self = {
+    href: `${
+      request.protocol + "://" + request.get("host") + request.originalUrl
+    }`,
+    rel: `self`,
+    type: `${request.method}`,
+  };
+  links_tab.push(self);
+  if (collection) {
+    hateoas_object.web_pages = parse_url_page(
+      self.href,
+      request.query.offset,
+      request.query.limit,
+      request.query.count
+    );
+  }
+  hateoas_object.web_links = links_tab;
+  // you can add some hateoas logic here
 
-    return hateoas_object;
+  return hateoas_object;
 }
 
 /**
@@ -126,40 +148,46 @@ function creat_hateoas_structure(request, collection = false) {
  * @param error
  * @returns {*}
  */
-function creat_response_structure(request, resource, resource_type, type_content, error = false) {
-    if (!error) {
-        request._resource = {
-            message: resource,
-            UserAgent: request.headers['user-agent'],
-        };
+function creat_response_structure(
+  request,
+  resource,
+  resource_type,
+  type_content,
+  error = false
+) {
+  if (!error) {
+    request._resource = {
+      message: resource,
+      UserAgent: request.headers["user-agent"],
+    };
+  } else {
+    if (Array.isArray(resource)) {
+      request._details = resource;
     } else {
-        if(Array.isArray(resource)) {
-            request._details = resource;
-        } else {
-            request._details = [{message: resource}];
-        }
+      request._details = [{ message: resource }];
     }
-    request._resource_type = resource_type;
-    request._type_content = type_content;
-    return request;
+  }
+  request._resource_type = resource_type;
+  request._type_content = type_content;
+  return request;
 }
 
 function query_parser(elements) {
-    Object.keys(elements).map(key => parseInt(elements[key]));
-    return elements;
+  Object.keys(elements).map((key) => parseInt(elements[key]));
+  return elements;
 }
 
 function objectParsInt(obj) {
-    const res = {}
-    Object.keys(obj).forEach(key => {
-        res[key] = {};
-        Object.keys(obj[key]).forEach(temp => {
-            res[key][temp] = !isNaN(obj[key][temp])
-                ? parseInt(obj[key][temp], 10)
-                : obj[key][temp];
-        });
+  const res = {};
+  Object.keys(obj).forEach((key) => {
+    res[key] = {};
+    Object.keys(obj[key]).forEach((temp) => {
+      res[key][temp] = !isNaN(obj[key][temp])
+        ? parseInt(obj[key][temp], 10)
+        : obj[key][temp];
     });
-    return res;
+  });
+  return res;
 }
 
 /**
@@ -170,21 +198,23 @@ function objectParsInt(obj) {
  * @returns {{valid: boolean, validation_errors: []}}
  */
 function validate_input_object(object, joiSchema) {
-    const { error } = joiSchema.validate(object);
-    const valid = error == null;
-    const validation_errors = error ? error.details.map(elm => elm.message) : [];
-    return { valid, validation_errors, error };
+  const { error } = joiSchema.validate(object);
+  const valid = error == null;
+  const validation_errors = error
+    ? error.details.map((elm) => elm.message)
+    : [];
+  return { valid, validation_errors, error };
 }
 
 module.exports = {
-    parse_url_page,
-    extend,
-    escapeRegex,
-    message_error,
-    create_structure,
-    creat_hateoas_structure,
-    creat_response_structure,
-    query_parser,
-    objectParsInt,
-    validate_input_object,
+  parse_url_page,
+  extend,
+  escapeRegex,
+  message_error,
+  create_structure,
+  creat_hateoas_structure,
+  creat_response_structure,
+  query_parser,
+  objectParsInt,
+  validate_input_object,
 };

@@ -2,10 +2,12 @@
  * Module dependencies.
  */
 const express = require("express");
+const passport = require("passport");
 const bodyParser = require("body-parser");
 const toobusy = require("toobusy-js");
 const helmet = require("helmet");
 const compression = require("compression");
+const { Authorization } = require("../authenticationPort");
 
 /**
  * Express module to launch web servers based on the expressJs framework.
@@ -36,6 +38,7 @@ class Express {
         res.setHeader(
           "Access-Control-Allow-Headers",
           "Origin, Accept," +
+            "X-Requested-With," +
             " Accept-Version, " +
             "Content-Length, " +
             "Content-MD5, " +
@@ -57,6 +60,7 @@ class Express {
 
     app.disable("x-powered-by");
   }
+
   /**
    * Initializing the ExpressJs application.
    *
@@ -75,6 +79,11 @@ class Express {
     /** Enable log file rotation with morgan */
     if (["production", "development"].includes(__config.variables.NODE_ENV))
       app.use(logger);
+    /** Enable authorization system with passport and MSAL microsoft AAD */
+    if (["production"].includes(__config.variables.NODE_ENV)) {
+      const authorization = new Authorization(passport, app);
+      app.use(authorization.setup());
+    }
     /** Add Api-Version to All Header Response. */
     app.use((request, response, next) => {
       response.setHeader(

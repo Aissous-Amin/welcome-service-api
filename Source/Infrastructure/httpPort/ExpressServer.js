@@ -1,9 +1,7 @@
 const Express = require("./Express");
 const http = require("http");
-const LOGGER = require("../managementAdapters/Logger");
-const persistence = require(__moduleAliases.Persistance);
-
-const { Messages } = persistence.mongoose.schemas.messages;
+const Logger = require("../managementAdapters/Logger");
+const { Mongoose } = require(__moduleAliases.Persistance);
 
 /** @memberof Infrastructure/ports/http */
 
@@ -20,19 +18,18 @@ class ExpressServer {
    * @param {*} middlewares - Middlewares Express.
    */
   static async init(middlewares) {
-    const logger = new LOGGER(__config.variables.DEFAULT_LOG_DIR);
-    /** init connection with Mongoose data base. */
-    await persistence.mongoose.database.init();
-    /** Implement data into our Mongoose data base. */
-    // await persistence.mongoose.database.import_data({ Messages });
-    /** Create log directory with logger stream. */
-    /** @type {object} */
+    /** Init log directory with logger stream morgan. */
+    const logger = new Logger(__config.variables.DEFAULT_LOG_DIR);
+    /** init connection with Mongoose database. */
+    const mongoose = new Mongoose.database(__config.variables.DATABASE_SERVER);
+    await mongoose.init();
+    /** Init data into our Mongoose database. */
+    // await mongoose.import_data({ Messages: Mongoose.schemas.message });
     const app = Express.init(logger.initDir());
     /** init connection with APM agent. */
-    // persistence.elasticApm.elasticApmConfig.init();
+    // ElasticApm.elasticApmConfig.init();
     /** init connection with azure application insights. */
-    // persistence.appInsight.applicationInsightConfig.init(__config.AZURE_APPLICATION_INSIGHTS);
-    /** TODO : Create log directory with logger stream or apm agent here. */
+    // AppInsight.applicationInsightConfig.init(__config.variables.AZURE_APPLICATION_INSIGHTS);
     /** Init service end-points. */
     middlewares(app);
     return app;

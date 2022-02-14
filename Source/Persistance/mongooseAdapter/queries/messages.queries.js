@@ -1,4 +1,4 @@
-const { Messages } = require("../schemas/messages.schemas");
+const schemas = require("../schemas");
 
 /**
  * Allows to find message by message_id.
@@ -7,7 +7,7 @@ const { Messages } = require("../schemas/messages.schemas");
  * @returns {object} Result - Messages informations.
  */
 function get_message_by_id(messages_id) {
-  return Messages.find({ _id: messages_id });
+  return schemas.message.find({ _id: messages_id });
 }
 
 /**
@@ -21,7 +21,7 @@ function get_message_by_id(messages_id) {
  */
 function get_message_collection(offset, limit, sort, order) {
   const skip = Math.floor(limit * offset - limit);
-  return Messages.aggregate([
+  return schemas.message.aggregate([
     { $sort: { sort: parseInt(order) } },
     { $skip: skip },
     { $limit: parseInt(limit) },
@@ -29,7 +29,7 @@ function get_message_collection(offset, limit, sort, order) {
 }
 
 function get_message_count() {
-  return Messages.countDocuments();
+  return schemas.message.countDocuments();
 }
 
 module.exports = {
