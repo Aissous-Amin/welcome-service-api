@@ -28,7 +28,11 @@ This is an ExpressJs application service, there are two ways to launch the appli
 
 6. Get help to format your commit message with Commitizen :
     - `npx cz`
-   
+
+7. Generate a self signe certificate with openSSL : For demonstration purposes we used openssl to generate our self-signed certificate (not recommended for a production environment, you should use a Certificate Authority)
+   To generate a self-signed certificate, run the following in your shell : `openssl req -x509 -newkey rsa:4096 -nodes -sha256 -subj '//CN=localhost' -keyout localhost-private-key.pem -out localhost-cert.pem`
+
+**Note** : the certificate and the private key are available in the /Config/lib directory
      
 **Note** 
 - you can ping the service with this command : 

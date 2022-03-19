@@ -1,8 +1,9 @@
 const Express = require("./Express");
-const http = require("http");
+const https = require("https");
+const fs = require("fs");
 const { Logger, Winston } = require("../managementAdapters");
 const { Mongoose } = require(__moduleAliases.Persistance);
-const winston = require("winston");
+const path = require("path");
 
 /** @memberof Infrastructure/ports/http */
 
@@ -36,9 +37,13 @@ class ExpressServer {
     return app;
   }
 
-  static http_listen(app) {
-    http.globalAgent.maxSockets = Infinity;
-    server = http.createServer(app);
+  static https_listen(app) {
+    const options = {
+      key: fs.readFileSync(path.join(process.cwd(), process.env.KEY)),
+      cert: fs.readFileSync(path.join(process.cwd(), process.env.CERT)),
+    };
+    https.globalAgent.maxSockets = Infinity;
+    server = https.createServer(options, app);
     server.listen(__config.port);
     return server;
   }
@@ -52,7 +57,7 @@ class ExpressServer {
    */
   static async start(middlewares) {
     const app = await ExpressServer.init(middlewares);
-    await this.http_listen(app);
+    await this.https_listen(app);
     Winston.info(__config.startMessage);
     Winston.info(`${__config.app.title} VERSION ${__config.API_VERSION}`);
     Winston.info(`Environnement: ${process.env.NODE_ENV}`);
