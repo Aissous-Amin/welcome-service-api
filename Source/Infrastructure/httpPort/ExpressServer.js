@@ -61,6 +61,9 @@ class ExpressServer {
     Winston.info(__config.startMessage);
     Winston.info(`${__config.app.title} VERSION ${__config.API_VERSION}`);
     Winston.info(`Environnement: ${process.env.NODE_ENV}`);
+    Winston.info(
+      `Server listen : https://${__config.host}:${__config.port}${__config.prefix}`
+    );
     return app;
   }
 
