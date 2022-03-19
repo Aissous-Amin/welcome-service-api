@@ -7,7 +7,7 @@ const options = {
   audience: __config.variables.authConfig.credentials.clientID, // audience of this application
   validateIssuer: __config.variables.authConfig.settings.validateIssuer,
   passReqToCallback: __config.variables.authConfig.settings.passReqToCallback,
-  loggingLevel: __config.variables.authConfig.settings.loggingLevel,
+  loggingLevel: __config.variables.authConfig.settings.loggingLevel, //Logging level. 'info', 'warn' or 'error'.
   scope: [...__config.variables.authConfig.protectedRoutes.messages.scopes],
   authority: `https://${__config.variables.authConfig.metadata.authority}/${__config.variables.authConfig.credentials.tenantID}`,
 };
