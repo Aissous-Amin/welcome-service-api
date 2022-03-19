@@ -61,7 +61,7 @@ class Logger {
       maxFiles: 15,
     });
     // De-comment this line if you want to integration Morgna logger with Winston ! it’s very simple ;)
-    // accessLogStream.write = (message) => Winston.http(message);
+    accessLogStream.write = (message) => Winston.http(message);
     const errorLogStream = rfs.createStream(options.logsFileError, {
       size: "10M",
       interval: "1d", // rotate daily
@@ -70,6 +70,8 @@ class Logger {
       maxSize: "2G",
       maxFiles: 15,
     });
+    // De-comment this line if you want to integration Morgna logger with Winston ! it’s very simple ;)
+    errorLogStream.write = (message) => Winston.error(message);
     const errorAPMLogStream = rfs.createStream("apm-error.log", {
       size: "10M",
       interval: "1d", // rotate daily

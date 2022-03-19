@@ -79,7 +79,7 @@ class Express {
     /** Enable log file rotation with morgan */
     if (["production", "development"].includes(__config.variables.NODE_ENV))
       app.use(logger);
-    /** Enable authorization system with passport and MSAL microsoft AAD */
+    /** Enable authorization system with passport and MSAL microsoft AAD in production mode*/
     if (["production"].includes(__config.variables.NODE_ENV)) {
       const authorization = new Authorization(passport, app);
       app.use(authorization.setup());
