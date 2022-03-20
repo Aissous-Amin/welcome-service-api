@@ -27,8 +27,8 @@
   - [Error Handling in Node.js](https://www.joyent.com/node-js/production/design/errors)
 - Use env variable correctly
   - Use dotenv to set up your var environment
-  - Use the env folder under the Conf layer to set up your env var per environnement
-  - ![](C:\Users\J1056682\MyWorkSpace\welcome-service-api\Docs\img\env.png "Env")
+  - Use the env folder under the Config layer to set up your env var per environnement
+    <img alt="Env" src="C:\Users\J1056682\MyWorkSpace\welcome-service-api\Docs\img\env.png" title="Env"/>
 - Health Checks and Graceful Shutdown
   - You can find the Graceful Shutdown configuration in the infrastructure layer at ExpressServer.js (static close())
 - [Husky](https://typicode.github.io/husky/#/)
