@@ -31,12 +31,12 @@ Object.assign(global, __moduleAliases);
 
 /**
  *
- * @type {{prefix: (string|string), port: (string|string), host: (string|string)}}
+ * @type {{APP_PREFIX: (string|string), port: (string|string), host: (string|string)}}
  */
 module.exports = {
-  prefix: variables.APP_PREFIX,
-  port: variables.APP_SERVER_PORT,
-  host: variables.APP_SERVER_HOST,
+  APP_PREFIX: variables.APP_PREFIX,
+  APP_SERVER_PORT: variables.APP_SERVER_PORT,
+  APP_SERVER_HOST: variables.APP_SERVER_HOST,
   startMessage: `˜”*°•.˜”*°• Weclome to API-Starter-Hexagonal-Kit Service*”˜.•°*”˜`,
   app: {
     title: "Starter-Hexagonal-Kit-Service ",

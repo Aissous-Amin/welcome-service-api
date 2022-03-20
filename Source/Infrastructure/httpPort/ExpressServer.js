@@ -37,6 +37,21 @@ class ExpressServer {
     return app;
   }
 
+  static shutDown() {
+    console.log("Received kill signal, shutting down gracefully");
+    server.close(() => {
+      console.log("Closed out remaining connections");
+      process.exit(0);
+    });
+
+    setTimeout(() => {
+      console.error(
+        "Could not close connections in time, forcefully shutting down"
+      );
+      process.exit(1);
+    }, 10000);
+  }
+
   static https_listen(app) {
     const options = {
       key: fs.readFileSync(path.join(process.cwd(), process.env.KEY)),
@@ -44,7 +59,7 @@ class ExpressServer {
     };
     https.globalAgent.maxSockets = Infinity;
     server = https.createServer(options, app);
-    server.listen(__config.port);
+    server.listen(__config.APP_SERVER_PORT);
     return server;
   }
 
@@ -62,8 +77,13 @@ class ExpressServer {
     Winston.info(`${__config.app.title} VERSION ${__config.API_VERSION}`);
     Winston.info(`Environnement: ${process.env.NODE_ENV}`);
     Winston.info(
-      `Server listen : https://${__config.host}:${__config.port}${__config.prefix}`
+      `Server listen : https://${__config.APP_SERVER_HOST}:${__config.APP_SERVER_PORT}${__config.APP_PREFIX}`
     );
+    // Health Checks and Graceful Shutdown
+    app.on("SIGTERM", () => {
+      console.debug("SIGTERM signal received: closing HTTP server");
+      this.close();
+    });
     return app;
   }
 
@@ -71,7 +91,7 @@ class ExpressServer {
    * Stoper l'application.
    */
   static close() {
-    server.close();
+    server.close(() => console.debug("HTTP server closed"));
   }
 }
 

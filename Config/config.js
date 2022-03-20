@@ -31,9 +31,9 @@ const EnvironmentVariable = () => {
  * @param {object} config - Objet config.
  */
 const DomainCheck = (config) => {
-  if (!config.prefix) {
+  if (!config.APP_PREFIX) {
     throw new Error(
-      "+ Important warning: config.prefix is empty. It should be set to the fully qualified prefix of the app."
+      "+ Important warning: config.APP_PREFIX is empty. It should be set to the fully qualified PREFIX of the app."
     );
   }
   if (!config.variables.NODE_ENV) {
@@ -43,7 +43,7 @@ const DomainCheck = (config) => {
   }
   if (!config.API_VERSION) {
     throw new Error(
-      "+ Important warning: config.API_VERSION is empty. It should be set to the fully qualified environment of the app."
+      "+ Important warning: config.API_VERSION is empty. It should be set to the fully qualified Version of the app."
     );
   }
 };
