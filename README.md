@@ -86,6 +86,9 @@ KEY= /Config/lib/localhost-private-key.pem //replace with your certKey
 CERT= /Config/lib/localhost-cert.pem //replace witth your CERT
 ````
 
+### Important
+> A mongodb database (_with mongoose_) is configured and implemented by default to run the project, you have to connect your own database.
+
 ### Run the project locally
 
         - `git clone git@github.com:TotalEnergies/nodejs-hexagonal-starter-kit.git`
