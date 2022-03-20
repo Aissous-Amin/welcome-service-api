@@ -1,4 +1,5 @@
 const appInsights = require("applicationinsights");
+const { Winston } = require("../../Infrastructure/managementAdapters");
 
 class APPINSIGHTS {
   static init(
@@ -29,9 +30,9 @@ class APPINSIGHTS {
       ] = "starter-hexagonal-kit-service";
       appInsights.start();
     } catch (e) {
-      console.error(e.message);
+      Winston.error(e.message);
     } finally {
-      console.log("Azure Application insights Configuration Done!");
+      Winston.info("Azure Application insights Configuration Done!");
     }
   }
 }
