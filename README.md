@@ -21,14 +21,19 @@
   - Helmet can help protect your app from some well-known web vulnerabilities by setting HTTP headers appropriately.
 - [Snyk](https://snyk.io/)
   - Ensure your dependencies are secure with Snyk
-- [Winston](https://www.npmjs.com/package/winston) and [Morgan](https://www.npmjs.com/package/morgan)
-  - Do logging correctly with **Morgan** and **Winston** for a full log system (rotating-file-stream)
+- Do logging correctly for a full log system (We have configured three adapters for centralized log management)
+  - With [Winston](https://www.npmjs.com/package/winston) and [Morgan](https://www.npmjs.com/package/morgan)
+    - Do logging correctly with **Morgan** and **Winston**  (rotating-file-stream)
+  - With Application Insight
+    - We add the [applicationinsights](https://www.npmjs.com/package/applicationinsights) SDK to include deep info about Node.js processes and their external dependencies such as database and cache services
+  - With [APM](https://www.npmjs.com/package/elastic-apm-node?activeTab=readme)
+    - We have configured an Elastic APM agent for a centralized log management with ElasticSearch and Kibana stack
 - Handle exceptions properly
   - [Error Handling in Node.js](https://www.joyent.com/node-js/production/design/errors)
 - Use env variable correctly
   - Use dotenv to set up your var environment
   - Use the env folder under the Config layer to set up your env var per environnement
-    <img alt="Env" src="C:\Users\J1056682\MyWorkSpace\welcome-service-api\Docs\img\env.png" title="Env"/>
+    ![](C:\Users\J1056682\MyWorkSpace\welcome-service-api\Docs\img\env.png)
 - Health Checks and Graceful Shutdown
   - You can find the Graceful Shutdown configuration in the infrastructure layer at ExpressServer.js (static close())
 - [Husky](https://typicode.github.io/husky/#/)

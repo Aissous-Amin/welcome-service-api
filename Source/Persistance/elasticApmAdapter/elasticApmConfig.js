@@ -1,5 +1,5 @@
 const APM_SERVICE = require("elastic-apm-node");
-const { Winston } = require("../applicationInsightAdapter");
+const { Winston } = require("../../Infrastructure/managementAdapters");
 
 class ElasticApmConfig {
   static init(
