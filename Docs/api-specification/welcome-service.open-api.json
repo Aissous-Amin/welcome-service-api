@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Welcome Service",
-    "description": "Welcome Service returns a welcome message.",
+    "title": "Nodejs Hexagonal Architecture Starter Kit",
+    "description": "A hello world starter kit for nodejs hexagonal architecture.",
     "version": "1.0.0",
     "contact": {
       "name": "Aissous Amin",
@@ -11,7 +11,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3001/api",
+      "url": "https://localhost:3001/api",
       "description": "Local Server Backend"
     }
   ],
@@ -60,15 +60,59 @@
                 "examples": {
                   "example-1": {
                     "value": {
-                      "_resource_type": "Messages_Welcome_Collection_Resource",
+                      "_resource_type": "Welcome_Messages_Collection_Resource",
                       "_resource": {
                         "message": [
-                          "Hello World!"
+                          {
+                            "_id": "620a4f791186eb5194ac63c1",
+                            "message": "Welcome to API service - version 3",
+                            "__v": 0
+                          },
+                          {
+                            "_id": "620a4f791186eb5194ac63c2",
+                            "message": "Welcome to API service - version 4",
+                            "__v": 0
+                          },
+                          {
+                            "_id": "620a4fdf2f330a03e409e86d",
+                            "message": "Welcome to API service - version 1",
+                            "__v": 0
+                          },
+                          {
+                            "_id": "620a4fdf2f330a03e409e86e",
+                            "message": "Welcome to API service - version 2",
+                            "__v": 0
+                          },
+                          {
+                            "_id": "620a4fdf2f330a03e409e86f",
+                            "message": "Welcome to API service - version 3",
+                            "__v": 0
+                          },
+                          {
+                            "_id": "620a4fdf2f330a03e409e870",
+                            "message": "Welcome to API service - version 4",
+                            "__v": 0
+                          }
                         ],
-                        "UserAgent": "PostMa,RunTime/7.29.0"
+                        "UserAgent": "PostmanRuntime/7.29.0"
                       },
-                      "_links": {},
-                      "_etag": "February 7th 2022, 8:31:33 pm"
+                      "_links": {
+                        "web_pages": {
+                          "total_object_number": 16,
+                          "total_pages_number": 2,
+                          "self": "https://localhost:3001/api/messages?offset=2&limit=10&sort=_id&order=1",
+                          "next": "",
+                          "prev": "https://localhost:3001/api/messages?offset=1&limit=10&sort=_id&order=1"
+                        },
+                        "web_links": [
+                          {
+                            "href": "https://localhost:3001/api/messages?offset=2&limit=10&sort=_id&order=1",
+                            "rel": "self",
+                            "type": "GET"
+                          }
+                        ]
+                      },
+                      "_etag": "March 20th 2022, 3:26:10 am"
                     }
                   }
                 }
@@ -247,6 +291,12 @@
                       "_etag": "string"
                     }
                   }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
                 }
               }
             }
