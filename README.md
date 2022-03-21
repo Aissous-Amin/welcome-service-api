@@ -14,6 +14,7 @@
 - [ ] Add SonarQube
 - [ ] Add CheckMarx
 - [ ] Add test (Mocha, SuperTest, Sinon)
+- [ ] Move to typescript
 
 ### Advanced Topics
 
